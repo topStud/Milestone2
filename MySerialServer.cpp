@@ -25,11 +25,11 @@ void MySerialServer::open(int port,ClientHandler &clientHandler)
         throw "Could not bind the socket to an IP";
     }
 
-    std::thread server_thread(&MySerialServer::runServer,this,clientHandler);
+    std::thread server_thread(&MySerialServer::runServer,this,&clientHandler);
     server_thread.detach();
 }
 
-void MySerialServer::runServer(ClientHandler &clientHandler)
+void MySerialServer::runServer(ClientHandler *clientHandler)
 {
     while(m_stopFlag==false)
     {
@@ -54,7 +54,7 @@ void MySerialServer::runServer(ClientHandler &clientHandler)
             stop();
         } else {
             std::cout << "Client accepted" << std::endl;
-            clientHandler.handle_client(clientSocket);
+            clientHandler->handle_client(clientSocket);
             close(clientSocket);
         }
     }

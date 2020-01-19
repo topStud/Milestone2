@@ -15,7 +15,7 @@ class TestClientHandler : public ClientHandler {
  public:
   TestClientHandler(Solver<std::string, std::string>* solver, CacheManager<std::string>* cache) : solver_(solver), cache_manager_(cache) {}
   static bool stop_flag;
-  void handle_client(std::istream input_stream, std::ostream output_stream) override;
+  void handle_client(int client_sd) override;
 };
 
 #endif //MILESTONE2__TESTCLIENTHANDLER_H_

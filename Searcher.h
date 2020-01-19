@@ -5,9 +5,13 @@
 #ifndef MILESTONE2__SEARCHER_H_
 #define MILESTONE2__SEARCHER_H_
 
+#include "Searchable.h"
+#include "State.h"
+
 template <typename T>
 class Searcher {
-  virtual void search(Searchable<T> s) = 0;
+    virtual State<T>* search(Searchable<T>& s) = 0;
+    virtual int getNumberOfNodesEvaluated()= 0;
 };
 
 #endif //MILESTONE2__SEARCHER_H_

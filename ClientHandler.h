@@ -7,7 +7,7 @@
 #include <iostream>
 class ClientHandler {
  public:
-  virtual void handle_client(std::istream input_stream, std::ostream output_stream) = 0;
+  virtual void handle_client(int client_sockfd) = 0;
 };
 
 #endif //MILESTONE2__CLIENTHANDLER_H_

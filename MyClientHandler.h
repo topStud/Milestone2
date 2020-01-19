@@ -15,11 +15,11 @@
 #include "CacheManager.h"
 
 class MyClientHandler : public ClientHandler{
-  Solver<std::string, std::string>* solver_;
-  CacheManager<std::string>* cache_manager_;
- public:
-  MyClientHandler(Solver<std::string, std::string>* solver, CacheManager<std::string>* cache) : solver_(solver), cache_manager_(cache) {}
-  void handle_client(/*std::istream input*/ int client_socket, std::ostream output) override;
+    Solver<std::string, std::string>* solver_;
+    CacheManager<std::string>* cache_manager_;
+public:
+    MyClientHandler(Solver<std::string, std::string>* solver, CacheManager<std::string>* cache) : solver_(solver), cache_manager_(cache) {}
+    void handle_client(/*std::istream input*/ int client_socket) override;
 };
 
 #endif //MILESTONE2__MYCLIENTHANDLER_H_

@@ -6,18 +6,23 @@
 #define MILESTONE2__STATE_H_
 
 #include <cmath>
+#include <limits>
 template <typename T>
 class State {
   const T identifier;
   const double value;
   double cost;
-  State<T>* prior;
+  double heuristic_cost;
+  State<T>* parent;
  public:
   State(T id, double val) : identifier(id), value(val), cost(std::numeric_limits<double>::infinity()) {}
-  int get_id () {return identifier;}
-  T get_value() {return value;}
-  void set_prior(State<T> former) {prior = former;}
+  T get_id () {return identifier;}
+  double get_value() {return value;}
+  void set_parent(State<T> *s) {parent = s;}
   void set_cost(double path_cost) {cost = path_cost;}
+  double get_cost() { return cost;}
+  void set_heuristic_cost(double heuristic_path_cost) {heuristic_cost = heuristic_path_cost;}
+  double get_heuristic_cost() { return heuristic_cost;}
   bool operator==(State<T> state) {return this->identifier == state.get_id();}
 };
 

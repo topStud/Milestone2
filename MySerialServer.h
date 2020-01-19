@@ -20,7 +20,7 @@ private:
     std::string m_tempString;*/
 public:
     MySerialServer();
-    void runServer(ClientHandler &clientHandler);
+    void runServer(ClientHandler *clientHandler);
    // bool getStopFlag() {return m_stopFlag;}
     //int getserverSocket() {return m_serverSocket;}
     virtual void open(int port,ClientHandler &clientHandler);

@@ -5,7 +5,7 @@
 #include "TestClientHandler.h"
 bool TestClientHandler::stop_flag = false;
 
-void TestClientHandler::handle_client(std::istream input_stream, std::ostream output_stream) {
+void TestClientHandler::handle_client(int client_sd) {
   std::string problem{};
   std::string solution{};
   while (true) {
@@ -14,14 +14,14 @@ void TestClientHandler::handle_client(std::istream input_stream, std::ostream ou
       break;
     }
 
-    getline(input_stream, problem);
+   /* getline(input_stream, problem);
     if (cache_manager_->exist_in_cache(problem)){
       output_stream << cache_manager_->get(problem);
     } else {
       solution = solver_->solve(problem);
       cache_manager_->save(problem, solution);
       output_stream << solution;
-    }
+    }*/
   }
 }
 
