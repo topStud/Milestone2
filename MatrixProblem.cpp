@@ -46,26 +46,39 @@ void MatrixProblem::matrix_from_str(const std::string& string) {
 
 std::vector<State<double>> MatrixProblem::create_successors(State<double> current_state) {
     std::vector<State<double>> vec;
+    double value;
     int id = current_state.get_id();
     // left
     if ((id % this-> cols) != 1) {
-        State<double> temp(id - 1, this->matrix[(id - 1) / this->cols][(id - 1) % this->cols]);
-        vec.push_back(temp);
+        value = this->matrix[(id - 1) / this->cols][(id - 1) % this->cols];
+        if (value != -1) {
+          State<double> temp(id - 1, value);
+          vec.push_back(temp);
+        }
     }
     // right
     if ((id % this->cols) != 0) {
-        State<double> temp(id + 1, this->matrix[(id + 1) / this->cols][(id + 1) % this->cols]);
-        vec.push_back(temp);
+        value = this->matrix[(id + 1) / this->cols][(id + 1) % this->cols];
+        if (value != -1) {
+          State<double> temp(id + 1, value);
+          vec.push_back(temp);
+        }
     }
     // up
     if ((id / (this->cols + 1)) != 0) {
-        State<double> temp(id - this->cols, this->matrix[(id - this->cols) / this->cols][(id - this->cols) % this->cols]);
-        vec.push_back(temp);
+        value = this->matrix[(id - this->cols) / this->cols][(id - this->cols) % this->cols];
+        if (value != -1) {
+          State<double> temp(id - this->cols, value);
+          vec.push_back(temp);
+        }
     }
     // down
     if ((id / this->cols) != this->rows) {
-        State<double> temp(id + this->cols, this->matrix[(id + this->cols) / this->cols][(id + this->cols) % this->cols]);
-        vec.push_back(temp);
+        value = this->matrix[(id + this->cols) / this->cols][(id + this->cols) % this->cols];
+        if (value != -1) {
+          State<double> temp(id + this->cols, value);
+          vec.push_back(temp);
+        }
     }
     return vec;
 }
