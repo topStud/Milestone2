@@ -25,10 +25,10 @@ public:
         return [](State<T>& nLeft, State<T>& nRight){ return nLeft.get_cost() > nRight.get_cost();};
     }
 
-    State<T>* search(Searchable<T>& s)
+    std::list<State<T>> search(Searchable<T>& s)
     {
         auto func = getCompareFunction();
-        std::map<T,State<T> > openList;
+        std::map<T,State<T>> openList;
         typename std::map<T,State<T> >::iterator iter;
         openList.insert(std::pair<T,State<T> >(s.get_init_state().get_id(),s.get_init_state()));
         std::unordered_set<T> closed;
@@ -66,7 +66,7 @@ public:
         return NULL;
     }
 
-    int getNumberOfNodesEvaluated(){ return m_evaluatedNodes;}
+    int getNumberOfNodesEvaluated() { return m_evaluatedNodes;}
 
 
 };

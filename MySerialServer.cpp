@@ -40,7 +40,7 @@ void MySerialServer::runServer(ClientHandler *clientHandler)
         }
 
         //Set timout of 2 minutes for server socket listening to client
-        struct timeval tv;
+        struct timeval tv{};
         tv.tv_sec = 120;
         tv.tv_usec = 0;
         int s = setsockopt(m_serverSocket, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);

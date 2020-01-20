@@ -19,7 +19,7 @@ class MyClientHandler : public ClientHandler{
     CacheManager<std::string>* cache_manager_;
 public:
     MyClientHandler(Solver<std::string, std::string>* solver, CacheManager<std::string>* cache) : solver_(solver), cache_manager_(cache) {}
-    void handle_client(/*std::istream input*/ int client_socket) override;
+    void handle_client( int client_socket) override;
 };
 
 #endif //MILESTONE2__MYCLIENTHANDLER_H_

@@ -5,6 +5,7 @@
 #ifndef MILESTONE2__TESTCLIENTHANDLER_H_
 #define MILESTONE2__TESTCLIENTHANDLER_H_
 
+#include <unistd.h>
 #include "ClientHandler.h"
 #include "Solver.h"
 #include "CacheManager.h"

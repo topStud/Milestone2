@@ -5,12 +5,14 @@
 #ifndef MILESTONE2__SEARCHER_H_
 #define MILESTONE2__SEARCHER_H_
 
+#include <list>
 #include "Searchable.h"
 #include "State.h"
 
 template <typename T>
 class Searcher {
-    virtual State<T>* search(Searchable<T>& s) = 0;
+ public:
+    virtual std::list<State<T>> search(Searchable<T>& s) = 0;
     virtual int getNumberOfNodesEvaluated()= 0;
 };
 

@@ -3,6 +3,7 @@
 //
 
 #include "MyClientHandler.h"
+#include "BestFirstSearch.h"
 
 void MyClientHandler::handle_client(int client_socket) {
     char buffer[1024] = "";
@@ -23,9 +24,17 @@ void MyClientHandler::handle_client(int client_socket) {
         solution = this->cache_manager_->get(matrix);
     } else {
         MatrixProblem matrix_p(matrix);
-        // MatrixSolverOA solver(searcher, searchable - matrix_p);
-        //this->cache_manager_->save(matrix, solution)
+        BestFirstSearch<double> b;
+        MatrixSolverOA solver(&b);
+        MatrixSolution matrix_solution = solver.solve(&matrix_p);
+        matrix_solution.edit_solution_representation();
+        solution = matrix_solution.get_solution();
+        this->cache_manager_->save(matrix, solution);
     }
-    //send solution to client - todo
+
+    int val_write = write(client_socket, buffer, 1024);
+    if (val_write == -1) {
+      std::cerr << "Error writing to client" << std::endl;
+    }
 
 }

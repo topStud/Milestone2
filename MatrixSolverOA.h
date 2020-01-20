@@ -8,17 +8,19 @@
 #include <string>
 #include <utility>
 
+#include "MatrixSolution.h"
 #include "Solver.h"
 #include "MatrixProblem.h"
 #include "Searcher.h"
 #include "Solution.h"
 
-class MatrixSolverOA : public Solver<Searchable<double>, Solution<std::string>> {
-Searchable<double>* searchable_;
-Searcher<double>* searcher_;
-public:
-explicit MatrixSolverOA(Searcher<double>* searcher, Searchable<double>* searchable) : searcher_(searcher), searchable_(searchable) {}
-Solution<std::string>* solve(Searchable<double>* searchable) override;
+class MatrixSolverOA : public Solver<Searchable<double>, MatrixSolution> {
+  Searcher<double>* searcher_;
+  int nodes_num;
+ public:
+  explicit MatrixSolverOA(Searcher<double>* searcher) : searcher_(searcher), nodes_num(0) {}
+  MatrixSolution solve(Searchable<double>* searchable) override;
+  int get_number_of_nodes_evaluated() override {return nodes_num;}
 };
 
 #endif //MILESTONE2__MATRIXSOLVEROA_H_
