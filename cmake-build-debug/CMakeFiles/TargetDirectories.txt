@@ -1,0 +1,3 @@
+/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug/CMakeFiles/milestone2.dir
+/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug/CMakeFiles/edit_cache.dir

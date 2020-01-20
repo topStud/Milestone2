@@ -41,6 +41,7 @@ void MatrixProblem::matrix_from_str(const std::string& string) {
     vec = this->matrix.back();
     this->init_state = new State<double>(1, this->matrix[*vec.begin()][vec.back()]);
     this->matrix.pop_back();
+    this->init_state->set_parent(nullptr);
 }
 
 std::vector<State<double>> MatrixProblem::create_successors(State<double> current_state) {

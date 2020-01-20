@@ -19,6 +19,7 @@ class State {
   T get_id () {return identifier;}
   double get_value() {return value;}
   void set_parent(State<T> *s) {parent = s;}
+  State<T>* get_parent() {return parent;}
   void set_cost(double path_cost) {cost = path_cost;}
   double get_cost() { return cost;}
   void set_heuristic_cost(double heuristic_path_cost) {heuristic_cost = heuristic_path_cost;}

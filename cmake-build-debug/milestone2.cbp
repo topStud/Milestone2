@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="milestone2"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="milestone2">
+				<Option output="/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug/milestone2" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug/Makefile&quot;  VERBOSE=1 milestone2"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="milestone2/fast">
+				<Option output="/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug/milestone2" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug/Makefile&quot;  VERBOSE=1 milestone2/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/topaz/CLionProjects/programming/milestone2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/BestFirstSearch.h">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/CacheManager.h">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/ClientHandler.h">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/FileCacheManager.h">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/Main.cpp">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/Main.h">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/MatrixProblem.cpp">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/MatrixProblem.h">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/MatrixSolution.cpp">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/MatrixSolution.h">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/MatrixSolverOA.cpp">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/MatrixSolverOA.h">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/MyClientHandler.cpp">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/MyClientHandler.h">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/MySerialServer.cpp">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/MySerialServer.h">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/Searchable.h">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/Searcher.h">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/Server.h">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/Solution.h">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/Solver.h">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/StringReverser.cpp">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/StringReverser.h">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/TestClientHandler.cpp">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/TestClientHandler.h">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/main.cpp">
+			<Option target="milestone2"/>
+		</Unit>
+		<Unit filename="/home/topaz/CLionProjects/programming/milestone2/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
