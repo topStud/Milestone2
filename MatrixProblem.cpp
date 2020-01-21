@@ -22,7 +22,8 @@ void MatrixProblem::matrix_from_str(const std::string& string) {
         count_rows++;
         std::stringstream ss2(row_str);
         while(getline(ss2, node, ',')) {
-            remove_if(node.begin(), node.end(), isspace);
+            //remove_if(node.begin(), node.end(), isspace);
+            node.erase(remove_if(node.begin(), node.end(), isspace), node.end());
             vec.push_back(strtod(node.c_str(), nullptr));
         }
         this->matrix.push_back(vec);
@@ -59,15 +60,6 @@ std::vector<State<double>*> MatrixProblem::create_successors(State<double> curre
         auto* temp = new State<double>(id - 1, value);
         vec.push_back(temp);
     }
-    // right
-    if ((id % this->cols) != 0) {
-      value = this->matrix[id / this->cols][id % this->cols];
-      if (value == -1) {
-        value = std::numeric_limits<double>::infinity();
-      }
-      auto* temp = new State<double>(id + 1, value);
-      vec.push_back(temp);
-    }
     // up
     if ((id / (this->cols + 1)) != 0) {
       value = this->matrix[(id - this->cols - 1) / this->cols][(id - this->cols - 1) % this->cols - 1];
@@ -75,6 +67,15 @@ std::vector<State<double>*> MatrixProblem::create_successors(State<double> curre
         value = std::numeric_limits<double>::infinity();
       }
       auto* temp = new State<double>(id - this->cols, value);
+      vec.push_back(temp);
+    }
+    // right
+    if ((id % this->cols) != 0) {
+      value = this->matrix[id / this->cols][id % this->cols];
+      if (value == -1) {
+        value = std::numeric_limits<double>::infinity();
+      }
+      auto* temp = new State<double>(id + 1, value);
       vec.push_back(temp);
     }
     // down
