@@ -6,10 +6,11 @@
 #include "Main.h"
 #include "MatrixSolution.h"
 #include "MatrixSolverOA.h"
+#include "DFS.h"
 
 int boot::Main::main(int argc, char **argv) {
 
-    BestFirstSearch<double> b;
+    //  BestFirstSearch<double> b;
     MatrixProblem m("8,2,8,6,8,2,12,2,4,1,9,9,5,12,1,1,1,2,7,3,1,6,9,3,9,7,7,9,5,6,4,5,1,6,-1,1,7\n"
                     "4,12,2,3,2,5,2,1,12,2,4,5,4,3,3,4,12,2,3,9,6,9,1,6,7,7,5,8,7,2,-1,3,2,5,-1,9,2\n"
                     "1, 5, 8, 9, 2, 1, 2, 4, 7, 8, 2, 9, 8, 4, 2, 2,12, 8, 8, 2, 3, 3, 1, 5,12,-1, 2, 7, 1, 4,-1,-1,-1, 2,-1, 5, 6\n"
@@ -53,8 +54,8 @@ int boot::Main::main(int argc, char **argv) {
     //b.search(m);
 
     MatrixProblem matrix_p(m);
-    //BestFirstSearch<double> b;
-    MatrixSolverOA solver(&b);
+    DFS<double> dfs;
+    MatrixSolverOA solver(&dfs);
     MatrixSolution matrix_solution = solver.solve(&matrix_p);
     matrix_solution.edit_solution_representation();
     std::cout <<  matrix_solution.get_solution();

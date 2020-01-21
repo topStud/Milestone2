@@ -4,12 +4,12 @@
 
 #include <iostream>
 #include "MatrixProblem.h"
-State<double> MatrixProblem::get_init_state() {
-    return *this->init_state;
+State<double>* MatrixProblem::get_init_state() {
+    return this->init_state;
 }
 
-State<double> MatrixProblem::get_goal() {
-    return *this->goal_state;
+State<double>* MatrixProblem::get_goal() {
+    return this->goal_state;
 }
 
 void MatrixProblem::matrix_from_str(const std::string& string) {
@@ -43,10 +43,11 @@ void MatrixProblem::matrix_from_str(const std::string& string) {
     this->init_state = new State<double>(1, this->matrix[*vec.begin()][vec.back()]);
     this->matrix.pop_back();
     this->init_state->set_parent(nullptr);
+    this->init_state->set_cost(this->init_state->get_value());
 }
 
-std::vector<State<double>> MatrixProblem::create_successors(State<double> current_state) {
-    std::vector<State<double>> vec;
+std::vector<State<double>*> MatrixProblem::create_successors(State<double> current_state) {
+    std::vector<State<double>*> vec;
     double value;
     int id = current_state.get_id();
     // left
@@ -55,7 +56,7 @@ std::vector<State<double>> MatrixProblem::create_successors(State<double> curren
         if (value == -1) {
           value = std::numeric_limits<double>::infinity();
         }
-        State<double> temp(id - 1, value);
+        auto* temp = new State<double>(id - 1, value);
         vec.push_back(temp);
     }
     // right
@@ -64,7 +65,7 @@ std::vector<State<double>> MatrixProblem::create_successors(State<double> curren
       if (value == -1) {
         value = std::numeric_limits<double>::infinity();
       }
-      State<double> temp(id + 1, value);
+      auto* temp = new State<double>(id + 1, value);
       vec.push_back(temp);
     }
     // up
@@ -73,7 +74,7 @@ std::vector<State<double>> MatrixProblem::create_successors(State<double> curren
       if (value == -1) {
         value = std::numeric_limits<double>::infinity();
       }
-      State<double> temp(id - this->cols, value);
+      auto* temp = new State<double>(id - this->cols, value);
       vec.push_back(temp);
     }
     // down
@@ -82,7 +83,7 @@ std::vector<State<double>> MatrixProblem::create_successors(State<double> curren
       if (value == -1) {
         value = std::numeric_limits<double>::infinity();
       }
-      State<double> temp(id + this->cols, value);
+      auto* temp = new State<double>(id + this->cols, value);
       vec.push_back(temp);
     }
     return vec;

@@ -4,6 +4,7 @@
 
 #include "MyClientHandler.h"
 #include "BestFirstSearch.h"
+#include "DFS.h"
 
 void MyClientHandler::handle_client(int client_socket) {
     char buffer[1024] = "";
@@ -24,7 +25,7 @@ void MyClientHandler::handle_client(int client_socket) {
         solution = this->cache_manager_->get(matrix);
     } else {
         MatrixProblem matrix_p(matrix);
-        BestFirstSearch<double> b;
+        DFS<double> b;
         MatrixSolverOA solver(&b);
         MatrixSolution matrix_solution = solver.solve(&matrix_p);
         matrix_solution.edit_solution_representation();

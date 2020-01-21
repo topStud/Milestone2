@@ -22,9 +22,9 @@ class MatrixProblem : public Searchable<double>{
     void matrix_from_str(const std::string& str);
 public:
     explicit MatrixProblem(const std::string& matrix) : init_state(nullptr), goal_state(nullptr), rows(0), cols(0) {matrix_from_str(matrix);}
-    State<double> get_init_state() override;
-    State<double> get_goal() override;
-    std::vector<State<double>> create_successors(State<double> current_state) override;
+    State<double>* get_init_state() override;
+    State<double>* get_goal() override;
+    std::vector<State<double>*> create_successors(State<double> current_state) override;
 };
 
 #endif //MILESTONE2__MATRIXPROBLEM_H_

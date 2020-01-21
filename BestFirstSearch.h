@@ -25,7 +25,7 @@ public:
         return [](State<T>& nLeft, State<T>& nRight){ return nLeft.get_cost() > nRight.get_cost();};
     }
 
-    State<double>* search(Searchable<T>& s)
+    /*State<double>* search(Searchable<T>& s)
     {
         auto func = getCompareFunction();
         std::map<T,State<T>> openList;
@@ -64,7 +64,7 @@ public:
             }
         }
         return NULL;
-    }
+    }*/
 
     int getNumberOfNodesEvaluated() { return m_evaluatedNodes;}
 
