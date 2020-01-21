@@ -2,7 +2,10 @@
 // Created by sigalit on 19.1.2020.
 //
 
+#include <iostream>
 #include "Main.h"
+#include "MatrixSolution.h"
+#include "MatrixSolverOA.h"
 
 int boot::Main::main(int argc, char **argv) {
 
@@ -47,5 +50,23 @@ int boot::Main::main(int argc, char **argv) {
                     "0,0\n"
                     "36,36\n"
                     "end");
-    b.search(m);
+    //b.search(m);
+
+    MatrixProblem matrix_p(m);
+    //BestFirstSearch<double> b;
+    MatrixSolverOA solver(&b);
+    MatrixSolution matrix_solution = solver.solve(&matrix_p);
+    matrix_solution.edit_solution_representation();
+    std::cout <<  matrix_solution.get_solution();
+    /*State<double> state1(0, 5);
+    state1.set_parent(nullptr);
+    State<double> state2(1, 43);
+    state2.set_parent(&state1);
+    State<double> state3(2, 23);
+    state3.set_parent(&state2);
+    State<double> state4(3, 88);
+    state4.set_parent(&state3);
+    MatrixSolution solution(&state4);
+    solution.edit_solution_representation();
+    std::cout << solution.get_solution() << std::endl;*/
 }

@@ -16,11 +16,11 @@
 #define DOWN "Down"
 
 class MatrixSolution : Solution<std::string> {
-  std::list<State<double>> state_list;
+  State<double>* state_;
   std::string solution;
   std::string recursion_path(State<double>* state);
  public:
-  explicit MatrixSolution(std::list<State<double>> list) : state_list(std::move(list)) {}
+  explicit MatrixSolution(State<double>* state) : state_(state) {}
   void edit_solution_representation() override;
   std::string get_solution() override { return solution;}
 };

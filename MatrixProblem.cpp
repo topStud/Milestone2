@@ -2,6 +2,7 @@
 // Created by topaz on 15/01/2020.
 //
 
+#include <iostream>
 #include "MatrixProblem.h"
 State<double> MatrixProblem::get_init_state() {
     return *this->init_state;
@@ -50,35 +51,39 @@ std::vector<State<double>> MatrixProblem::create_successors(State<double> curren
     int id = current_state.get_id();
     // left
     if ((id % this-> cols) != 1) {
-        value = this->matrix[(id - 1) / this->cols][(id - 1) % this->cols];
-        if (value != -1) {
-          State<double> temp(id - 1, value);
-          vec.push_back(temp);
+        value = this->matrix[(id - 1) / this->cols][(id - 1) % this->cols - 1];
+        if (value == -1) {
+          value = std::numeric_limits<double>::infinity();
         }
+        State<double> temp(id - 1, value);
+        vec.push_back(temp);
     }
     // right
     if ((id % this->cols) != 0) {
-        value = this->matrix[(id + 1) / this->cols][(id + 1) % this->cols];
-        if (value != -1) {
-          State<double> temp(id + 1, value);
-          vec.push_back(temp);
-        }
+      value = this->matrix[id / this->cols][id % this->cols];
+      if (value == -1) {
+        value = std::numeric_limits<double>::infinity();
+      }
+      State<double> temp(id + 1, value);
+      vec.push_back(temp);
     }
     // up
     if ((id / (this->cols + 1)) != 0) {
-        value = this->matrix[(id - this->cols) / this->cols][(id - this->cols) % this->cols];
-        if (value != -1) {
-          State<double> temp(id - this->cols, value);
-          vec.push_back(temp);
-        }
+      value = this->matrix[(id - this->cols - 1) / this->cols][(id - this->cols - 1) % this->cols - 1];
+      if (value == -1) {
+        value = std::numeric_limits<double>::infinity();
+      }
+      State<double> temp(id - this->cols, value);
+      vec.push_back(temp);
     }
     // down
-    if ((id / this->cols) != this->rows) {
-        value = this->matrix[(id + this->cols) / this->cols][(id + this->cols) % this->cols];
-        if (value != -1) {
-          State<double> temp(id + this->cols, value);
-          vec.push_back(temp);
-        }
+    if ((id / this->cols) != this->rows - 1) {
+      value = this->matrix[(id + this->cols - 1) / this->cols][(id + this->cols  - 1) % this->cols];
+      if (value == -1) {
+        value = std::numeric_limits<double>::infinity();
+      }
+      State<double> temp(id + this->cols, value);
+      vec.push_back(temp);
     }
     return vec;
 }
