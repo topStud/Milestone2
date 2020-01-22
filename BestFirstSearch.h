@@ -4,70 +4,71 @@
 
 #include <queue>
 #include <functional>
-#include <unordered_set>
 #include <map>
+#include <unordered_map>
 #include "Searcher.h"
+#include <iostream>
 
 template <typename T>
 class BestFirstSearch : public Searcher<T>{
 
 private:
     int m_evaluatedNodes;
+    std::unordered_map<T, State<T>*> closed;
+    typename std::map<T, State<T>*>::iterator iter;
+
 
 public:
 
-    BestFirstSearch()
+    BestFirstSearch(): m_evaluatedNodes(0) {}
+
+    virtual std::function<bool(State<T>*,State<T>*)> getCompareFunction()
     {
-        m_evaluatedNodes= 0;
-    }
-    virtual std::function<bool(State<T>&,State<T>&)> getCompareFunction()
-    {
-        return [](State<T>& nLeft, State<T>& nRight){ return nLeft.get_cost() > nRight.get_cost();};
+        return [](State<T>* nLeft, State<T>* nRight){ return nLeft->get_cost() > nRight->get_cost();};
     }
 
-    /*State<double>* search(Searchable<T>& s)
-    {
+    State<T>* search(Searchable<T>& s) override {
         auto func = getCompareFunction();
-        std::map<T,State<T>> openList;
-        typename std::map<T,State<T> >::iterator iter;
-        openList.insert(std::pair<T,State<T> >(s.get_init_state().get_id(),s.get_init_state()));
-        std::unordered_set<T> closed;
+        std::map<T, State<T>*,decltype(func)> openList;
+        State<T>* init_state = s.get_init_state();
+        openList[init_state->get_id()]=init_state;
+        State<T>* node;
         while (!openList.empty())
         {
             iter = openList.begin();
-            State<T> n = iter->second;
+            node = iter->second;
             openList.erase(iter);
             m_evaluatedNodes++;
-            closed.insert(n.get_id());
-            if(n==s.get_goal())
+            closed[node->get_id()] = node;
+            if(*node==s.get_goal())
             {
-                return &n;
+                // todo - add new function to remove all nodes from the solution path from closed map, then,
+                //  delete the rest of the nodes from openList and closed and clear both maps
+                return node;
             }
-            std::vector<State<T> > successors = s.create_successors(n);
-            for (State<T> c : successors)
+            std::vector<State<T>* > successors = s.create_successors(node);
+            for (State<T> *c : successors)
             {
-                if(closed.find(c.get_id()) == closed.end() && openList.find(c.get_id()) == openList.end())
+                if(closed.find(c->get_id()) == closed.end() && openList.find(c->get_id()) == openList.end())
                 {
-                    c.set_parent(&n);
-                    c.set_cost(n.get_cost()+c.get_value());
-                    openList.insert(std::pair<T,State<T> >(c.get_id(),c));
+                    openList[c->get_id()] = c;
                 }
                 else
                 {
-                    iter = openList.find(c.get_id());
-                    if(iter != openList.end() && func(iter->second, c))
-                    {
-                        openList.erase(iter);
-                        openList.insert(std::pair<T,State<T> >(c.get_id(),c));
+                    iter = openList.find(c->get_id());
+                    if(iter != openList.end()) {
+                        if (iter != openList.end() && func(iter->second, c)) {
+                            openList.erase(iter);
+                            openList[c->get_id()] = c;
+                        }
                     }
                 }
             }
         }
         return NULL;
-    }*/
+    }
 
     int getNumberOfNodesEvaluated() { return m_evaluatedNodes;}
-
 
 };
 

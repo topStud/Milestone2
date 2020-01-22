@@ -12,7 +12,7 @@
 template <typename T>
 class DFS : public  Searcher<T> {
   int nodes_num;
-  std::unordered_map<int, State<T>*> finished_nodes;
+  std::unordered_map<T, State<T>*> finished_nodes;
   std::stack<State<T>*> stack_nodes;
  public:
   DFS() : nodes_num(0) {}
@@ -26,19 +26,16 @@ class DFS : public  Searcher<T> {
     stack_nodes.push(init_state);
     while (!stack_nodes.empty()) {
       node = stack_nodes.top();
-      if ((*node) == *s.get_goal()) {
+      if ((*node) == s.get_goal()) {
         return node;
       }
       stack_nodes.pop();
       if (finished_nodes.find(node->get_id()) == finished_nodes.end()) {
         nodes_num++;
         finished_nodes.insert({node->get_id(), node});
-        successors = s.create_successors(*node);
+        successors = s.create_successors(node);
         for (State<T>* c : successors) {
-          if (finished_nodes.find(c->get_id()) == finished_nodes.end()
-            && c->get_value() != std::numeric_limits<double>::infinity()) {
-            c->set_parent(node);
-            c->set_cost(node->get_cost() + c->get_value());
+          if (finished_nodes.find(c->get_id()) == finished_nodes.end()) {
             stack_nodes.push(c);
           }
         }
@@ -53,7 +50,7 @@ class DFS : public  Searcher<T> {
       delete stack_nodes.top();
       stack_nodes.pop();
     }
-    for (std::pair<int, State<T>*> element :finished_nodes) {
+    for (std::pair<T, State<T>*> element :finished_nodes) {
       delete element.second;
     }
   }
