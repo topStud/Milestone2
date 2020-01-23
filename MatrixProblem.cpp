@@ -38,13 +38,13 @@ void MatrixProblem::matrix_from_str(const std::string& string) {
     vec = this->matrix.back();
     goal_row = *vec.begin();
     goal_col = vec.back();
-    this->goal_state = new State<double>(goal_row * this->cols + goal_col + 1, this->matrix[goal_row][goal_col]);
+    this->goal_state = new State<double>(goal_row * this->cols + goal_col + 1, this->matrix[goal_row][goal_col], goal_row, goal_col);
     this->goal_state->set_heuristic_cost(0);
     this->matrix.pop_back();
     vec = this->matrix.back();
     init_row = *vec.begin();
     init_col = vec.back();
-    this->init_state = new State<double>(init_row * this->cols + init_col + 1, this->matrix[init_row][init_col]);
+    this->init_state = new State<double>(init_row * this->cols + init_col + 1, this->matrix[init_row][init_col],init_row,init_col);
     this->matrix.pop_back();
     this->init_state->set_parent(nullptr);
     this->init_state->set_cost(this->init_state->get_value());
@@ -55,47 +55,56 @@ std::vector<State<double>*> MatrixProblem::create_successors(State<double>* curr
     std::vector<State<double>*> vec;
     double value;
     int id = current_state->get_id();
+    int row,col;
     // left
     if ((id % this-> cols) != 1) {
-        value = this->matrix[(id - 1) / this->cols][((id - 1) % this->cols) - 1];
+        row = (id - 1) / this->cols;
+        col = ((id - 1) % this->cols) - 1;
+        value = this->matrix[row][col];
         /*if (value == -1) {
           value = std::numeric_limits<double>::infinity();
         }*/
         if (value!=-1) {
-            auto *temp = new State<double>(id - 1, value);
+            auto *temp = new State<double>(id - 1, value, row, col);
             vec.push_back(temp);
         }
     }
     // up
     if ((id / (this->cols + 1)) != 0) {
-      value = this->matrix[(id - 1) / this->cols -1][(id - 1) % this->cols];
+        row = (id - 1) / this->cols -1;
+        col = (id - 1) % this->cols;
+      value = this->matrix[row][col];
       /*if (value == -1) {
         value = std::numeric_limits<double>::infinity();
       }*/
         if (value!=-1) {
-            auto *temp = new State<double>(id - this->cols, value);
+            auto *temp = new State<double>(id - this->cols, value,row,col);
             vec.push_back(temp);
         }
     }
     // right
     if ((id % this->cols) != 0) {
-      value = this->matrix[(id-1) / this->cols][((id - 1) % this->cols) +1];
+        row = (id-1) / this->cols;
+        col = ((id - 1) % this->cols) +1;
+      value = this->matrix[row][col];
       /*if (value == -1) {
         value = std::numeric_limits<double>::infinity();
       }*/
         if (value!=-1) {
-            auto *temp = new State<double>(id + 1, value);
+            auto *temp = new State<double>(id + 1, value,row,col);
             vec.push_back(temp);
         }
     }
     // down
     if ((id / this->cols) != this->rows - 1) {
-      value = this->matrix[((id - 1) / this->cols)+1][(id - 1) % this->cols];
+        row = ((id - 1) / this->cols)+1;
+        col = (id - 1) % this->cols;
+      value = this->matrix[row][col];
      /* if (value == -1) {
         value = std::numeric_limits<double>::infinity();
       }*/
         if (value!=-1) {
-            auto *temp = new State<double>(id + this->cols, value);
+            auto *temp = new State<double>(id + this->cols, value,row,col);
             vec.push_back(temp);
         }
     }

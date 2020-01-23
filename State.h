@@ -14,9 +14,13 @@ class State {
   double cost;
   double heuristic_cost;
   State<T>* parent;
+  int row;
+  int col;
  public:
-  State(T id, double val) : id(id), value(val), cost(std::numeric_limits<double>::infinity()) {}
+  State(T id, double val,int row, int col) : id(id), value(val), row(row), col(col), cost(std::numeric_limits<double>::infinity()) {}
   T get_id () {return id;}
+  int get_row(){ return row;}
+  int get_col(){ return col;}
   double get_value() {return value;}
   void set_parent(State<T> *s) {parent = s;}
   State<T>* get_parent() {return parent;}

@@ -12,26 +12,29 @@
 template <typename T>
 class BestFirstSearch : public Searcher<T>{
 
+    typedef std::pair<T, State<T>*> pair;
+    typedef typename std::map<pair, State<T>*>::iterator Iterator;
 private:
     int m_evaluatedNodes;
     std::unordered_map<T, State<T>*> closed;
-    typename std::map<T, State<T>*>::iterator iter;
-
+    Iterator iter;
 
 public:
 
     BestFirstSearch(): m_evaluatedNodes(0) {}
 
-    virtual std::function<bool(State<T>*,State<T>*)> getCompareFunction()
+    virtual std::function<bool(pair,pair)> getCompareFunction()
     {
-        return [](State<T>* nLeft, State<T>* nRight){ return nLeft->get_cost() > nRight->get_cost();};
+        return [](pair eLeft, pair eRight){ return eLeft.second->get_cost() < eRight.second->get_cost();};
     }
 
     State<T>* search(Searchable<T>& s) override {
+        std::pair<int,int> max_row= {0,0},max_col = {0,0};
         auto func = getCompareFunction();
-        std::map<T, State<T>*,decltype(func)> openList;
+
+        std::map<pair, State<T>*,decltype(func)> openList(func);
         State<T>* init_state = s.get_init_state();
-        openList[init_state->get_id()]=init_state;
+        openList[{init_state->get_id(), init_state}]=init_state;
         State<T>* node;
         while (!openList.empty())
         {
@@ -40,6 +43,15 @@ public:
             openList.erase(iter);
             m_evaluatedNodes++;
             closed[node->get_id()] = node;
+            std::cout<<"Current node: "<< node->get_id()<<" - "<<node->get_row()<<","<<node->get_col()<<std::endl;
+            if(max_row.first<node->get_row())
+            {
+                max_row = {node->get_row(), node->get_col()};
+            }
+            if(max_col.second<node->get_col())
+            {
+                max_col = {node->get_row(), node->get_col()};
+            }
             if(*node==s.get_goal())
             {
                 // todo - add new function to remove all nodes from the solution path from closed map, then,
@@ -47,24 +59,53 @@ public:
                 return node;
             }
             std::vector<State<T>* > successors = s.create_successors(node);
+            std::cout<<"Num Of Successors found: "<< successors.size() <<std::endl;
             for (State<T> *c : successors)
             {
-                if(closed.find(c->get_id()) == closed.end() && openList.find(c->get_id()) == openList.end())
+                std::cout<<"Successsor: "<< c->get_row()<<","<<c->get_col() <<std::endl;
+                if(c->get_id() == 1252)
                 {
-                    openList[c->get_id()] = c;
+                    std::cout<<"WHYYYYYYYYYY"<< std::endl;
+
+                }
+                //std::pair<bool, typename std::map<pair, State<T>*>::iterator> p = findPosInList(openList, c->get_id());
+                bool in_openList = false;
+                iter = openList.begin();
+                while (iter != openList.end())
+                {
+                    if(iter->first.first == c->get_id())
+                    {
+                        in_openList = true;
+                        break;
+                    }
+                    ++iter;
+                }
+                bool in_closed = closed.find(c->get_id()) != closed.end();
+                if(in_closed){
+                    std::cout<<"Already in closed: "<< c->get_id()<<std::endl;
+                }
+
+                if(!in_closed && !in_openList)
+                {
+                    auto pair_key = std::make_pair(c->get_id(), c);
+                    openList[pair_key] = c;
                 }
                 else
                 {
-                    iter = openList.find(c->get_id());
-                    if(iter != openList.end()) {
-                        if (iter != openList.end() && func(iter->second, c)) {
+                    if(in_openList)
+                    {
+                        std::cout<<"Already in OpenList: "<< c->get_id()<<std::endl;
+                        if (iter->second->get_cost() >= c->get_cost()) {
                             openList.erase(iter);
-                            openList[c->get_id()] = c;
+                            openList[std::make_pair(c->get_id(), c)] = c;
                         }
                     }
                 }
             }
         }
+        std::cout<<"Max Col point: "<<max_col.first<<","<<max_col.second<<std::endl;
+        std::cout<<"Max Row point: "<<max_row.first<<","<<max_row.second<<std::endl;
+
         return NULL;
     }
 
