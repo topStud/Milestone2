@@ -16,11 +16,13 @@ class State {
   State<T>* parent;
   int row;
   int col;
+  int degree;
  public:
-  State(T id, double val,int row, int col) : id(id), value(val), row(row), col(col), cost(std::numeric_limits<double>::infinity()) {}
+  State(T id, double val,int row, int col, int degree) : id(id), value(val), row(row), col(col), degree(degree), cost(std::numeric_limits<double>::infinity()) {}
   T get_id () {return id;}
   int get_row(){ return row;}
   int get_col(){ return col;}
+  int get_degree() { return degree;}
   double get_value() {return value;}
   void set_parent(State<T> *s) {parent = s;}
   State<T>* get_parent() {return parent;}

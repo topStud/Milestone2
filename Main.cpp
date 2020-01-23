@@ -7,6 +7,8 @@
 #include "MatrixSolution.h"
 #include "MatrixSolverOA.h"
 #include "DFS.h"
+#include "BFS.h"
+#include "Astar.h"
 
 int boot::Main::main(int argc, char **argv) {
 
@@ -50,11 +52,11 @@ int boot::Main::main(int argc, char **argv) {
                     "0,0\n"
                     "36,36\n"
                     "end");
-//    b.search(m);
-
     MatrixProblem matrix_p(m);
     DFS<double> dfs;
     BestFirstSearch<double> b;
+    BFS<double> bfs;
+    Astar<double> astar;
     MatrixSolverOA solver(&b);
     MatrixSolution matrix_solution = solver.solve(&matrix_p);
     matrix_solution.edit_solution_representation();

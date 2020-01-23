@@ -38,13 +38,13 @@ void MatrixProblem::matrix_from_str(const std::string& string) {
     vec = this->matrix.back();
     goal_row = *vec.begin();
     goal_col = vec.back();
-    this->goal_state = new State<double>(goal_row * this->cols + goal_col + 1, this->matrix[goal_row][goal_col], goal_row, goal_col);
+    this->goal_state = new State<double>(goal_row * this->cols + goal_col + 1, this->matrix[goal_row][goal_col], goal_row, goal_col, 0);
     this->goal_state->set_heuristic_cost(0);
     this->matrix.pop_back();
     vec = this->matrix.back();
     init_row = *vec.begin();
     init_col = vec.back();
-    this->init_state = new State<double>(init_row * this->cols + init_col + 1, this->matrix[init_row][init_col],init_row,init_col);
+    this->init_state = new State<double>(init_row * this->cols + init_col + 1, this->matrix[init_row][init_col],init_row,init_col, 0);
     this->matrix.pop_back();
     this->init_state->set_parent(nullptr);
     this->init_state->set_cost(this->init_state->get_value());
@@ -61,11 +61,9 @@ std::vector<State<double>*> MatrixProblem::create_successors(State<double>* curr
         row = (id - 1) / this->cols;
         col = ((id - 1) % this->cols) - 1;
         value = this->matrix[row][col];
-        /*if (value == -1) {
-          value = std::numeric_limits<double>::infinity();
-        }*/
+
         if (value!=-1) {
-            auto *temp = new State<double>(id - 1, value, row, col);
+            auto *temp = new State<double>(id - 1, value, row, col, current_state->get_degree()+1);
             vec.push_back(temp);
         }
     }
@@ -73,12 +71,10 @@ std::vector<State<double>*> MatrixProblem::create_successors(State<double>* curr
     if ((id / (this->cols + 1)) != 0) {
         row = (id - 1) / this->cols -1;
         col = (id - 1) % this->cols;
-      value = this->matrix[row][col];
-      /*if (value == -1) {
-        value = std::numeric_limits<double>::infinity();
-      }*/
+        value = this->matrix[row][col];
+
         if (value!=-1) {
-            auto *temp = new State<double>(id - this->cols, value,row,col);
+            auto *temp = new State<double>(id - this->cols, value,row,col,current_state->get_degree()+1);
             vec.push_back(temp);
         }
     }
@@ -86,38 +82,30 @@ std::vector<State<double>*> MatrixProblem::create_successors(State<double>* curr
     if ((id % this->cols) != 0) {
         row = (id-1) / this->cols;
         col = ((id - 1) % this->cols) +1;
-      value = this->matrix[row][col];
-      /*if (value == -1) {
-        value = std::numeric_limits<double>::infinity();
-      }*/
+        value = this->matrix[row][col];
+
         if (value!=-1) {
-            auto *temp = new State<double>(id + 1, value,row,col);
+            auto *temp = new State<double>(id + 1, value,row,col, current_state->get_degree()+1);
             vec.push_back(temp);
         }
     }
     // down
-    if ((id / this->cols) != this->rows - 1) {
+    if (((id - 1)/ this->cols) != this->rows - 1) {
         row = ((id - 1) / this->cols)+1;
         col = (id - 1) % this->cols;
-      value = this->matrix[row][col];
-     /* if (value == -1) {
-        value = std::numeric_limits<double>::infinity();
-      }*/
+        value = this->matrix[row][col];
+
         if (value!=-1) {
-            auto *temp = new State<double>(id + this->cols, value,row,col);
+            auto *temp = new State<double>(id + this->cols, value,row,col, current_state->get_degree()+1);
             vec.push_back(temp);
         }
     }
-    int goal_id = goal_state->get_id();
-    int goal_row = (goal_id - 1) / this->cols;
-    int goal_col = (goal_id - 1) % this->cols;
+
     for (int i = 0; i < vec.size(); ++i) {
         vec[i]->set_parent(current_state);
         vec[i]->set_cost(current_state->get_cost() + vec[i]->get_value());
-        int tmp_id = vec[i]->get_id();
-        int tmp_row = (tmp_id - 1) / this->cols;
-        int tmp_col = (tmp_id - 1) % this->cols;
-        vec[i]->set_heuristic_cost(abs(tmp_row-goal_row) + abs(tmp_col-goal_col));
+        vec[i]->set_heuristic_cost(abs(vec[i]->get_row()-goal_state->get_row()) +
+        abs(vec[i]->get_col()-goal_state->get_col()));
     }
     return vec;
 }
