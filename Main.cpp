@@ -61,6 +61,7 @@ int boot::Main::main(int argc, char **argv) {
     MatrixSolution matrix_solution = solver.solve(&matrix_p);
     matrix_solution.edit_solution_representation();
     std::cout <<  matrix_solution.get_solution();
+
     /*State<double> state1(0, 5);
     state1.set_parent(nullptr);
     State<double> state2(1, 43);

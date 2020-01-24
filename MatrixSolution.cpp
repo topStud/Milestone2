@@ -5,9 +5,21 @@
 #include "MatrixSolution.h"
 void MatrixSolution::edit_solution_representation() {
   std::string result = recursion_path(this->state_);
+  release_solution();
   this->solution = result.substr(0, result.length() - 2);
 }
 
+void MatrixSolution::release_solution() {
+    State<double> *tmp = this->state_->get_parent();
+    while (tmp != nullptr) {
+        delete this->state_;
+        this->state_ = tmp;
+        tmp = tmp->get_parent();
+    }
+    if (this->state_ != nullptr) {
+        delete this->state_;
+    }
+}
 std::string MatrixSolution::recursion_path(State<double> *state) {
   std::string  str{}, direction{};
   // parent of the initiate state

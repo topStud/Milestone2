@@ -25,6 +25,26 @@ protected:
         return [](pair eLeft, pair eRight){ return eLeft.second->get_cost() <= eRight.second->get_cost();};
     }
 
+    void releaseClosedMap(State<T>* node)
+    {
+        State<T>* tmp_node = node;
+        while(tmp_node != nullptr) {
+            for (std::pair<T, State<T> *> element : closed) {
+                if (element.first == tmp_node->get_id())
+                {
+                    closed.erase(tmp_node->get_id());
+                    break;
+                }
+            }
+            tmp_node = tmp_node->get_parent();
+        }
+        for (std::pair<T, State<T>*> element : closed) {
+            delete element.second;
+        }
+        closed.clear();
+    }
+
+
 public:
 
     BestFirstSearch(): m_evaluatedNodes(0) {}
@@ -47,6 +67,11 @@ public:
             {
                 // todo - add new function to remove all nodes of the solution path from closed map, then,
                 //  delete the rest of the nodes from openList and closed and clear both maps
+                for (std::pair<pair,T> element : openList) {
+                    delete element.first.second;
+                }
+                openList.clear();
+                releaseClosedMap(node);
                 return node;
             }
             std::vector<State<T>* > successors = s.create_successors(node);
@@ -73,6 +98,11 @@ public:
                     if (in_openList && !func(iter->first, {c->get_id(),c})) {
                         openList.erase(iter);
                         openList.insert({{c->get_id(), c},c->get_id()});
+                        delete iter->first.second;
+                    }
+                    else
+                    {
+                        delete c;
                     }
                 }
             }

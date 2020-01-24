@@ -19,7 +19,8 @@ class MatrixSolution : Solution<std::string> {
   State<double>* state_;
   std::string solution;
   std::string recursion_path(State<double>* state);
- public:
+  void release_solution();
+public:
   explicit MatrixSolution(State<double>* state) : state_(state) {}
   void edit_solution_representation() override;
   std::string get_solution() override { return solution;}
