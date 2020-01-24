@@ -2,14 +2,36 @@
 // Created by topaz on 15/01/2020.
 //
 
-#include <iostream>
 #include "MatrixProblem.h"
+#include "MatrixHashTable.h"
+int MatrixProblem::counter = 0;
+
 State<double>* MatrixProblem::get_init_state() {
     return this->init_state;
 }
 
 State<double>* MatrixProblem::get_goal() {
     return this->goal_state;
+}
+
+std::string MatrixProblem::get_name() {
+  return "Matrix_Problem_" + std::to_string(counter);
+}
+
+bool MatrixProblem::is_number(const std::string& str) {
+  std::regex r("-?([0-9]+|[0-9]+.[0-9])");
+  return std::regex_match(str, r);
+}
+
+MatrixProblem::MatrixProblem(const std::string& matrix) {
+  init_state = nullptr;
+  goal_state = nullptr;
+  rows = 0;
+  cols = 0;
+  name = "";
+  counter++;
+  matrix_from_str(matrix);
+  MatrixHashTable::get_instance()->add_to_table(matrix, this->get_name());
 }
 
 void MatrixProblem::matrix_from_str(const std::string& string) {
@@ -22,9 +44,9 @@ void MatrixProblem::matrix_from_str(const std::string& string) {
         count_rows++;
         std::stringstream ss2(row_str);
         while(getline(ss2, node, ',')) {
-            //remove_if(node.begin(), node.end(), isspace);
             node.erase(remove_if(node.begin(), node.end(), isspace), node.end());
-            vec.push_back(strtod(node.c_str(), nullptr));
+            if (is_number(node))
+              vec.push_back(strtod(node.c_str(), nullptr));
         }
         this->matrix.push_back(vec);
         vec.clear();

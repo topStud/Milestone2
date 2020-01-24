@@ -9,10 +9,14 @@
 #include "DFS.h"
 #include "BFS.h"
 #include "Astar.h"
+#include "Server.h"
+#include "MySerialServer.h"
+#include "MyClientHandler.h"
+#include "FileCacheManager.h"
 
 int boot::Main::main(int argc, char **argv) {
 
-    MatrixProblem m("8,2,8,6,8,2,12,2,4,1,9,9,5,12,1,1,1,2,7,3,1,6,9,3,9,7,7,9,5,6,4,5,1,6,-1,1,7\n"
+    /*MatrixProblem m("8,2,8,6,8,2,12,2,4,1,9,9,5,12,1,1,1,2,7,3,1,6,9,3,9,7,7,9,5,6,4,5,1,6,-1,1,7\n"
                     "4,12,2,3,2,5,2,1,12,2,4,5,4,3,3,4,12,2,3,9,6,9,1,6,7,7,5,8,7,2,-1,3,2,5,-1,9,2\n"
                     "1, 5, 8, 9, 2, 1, 2, 4, 7, 8, 2, 9, 8, 4, 2, 2,12, 8, 8, 2, 3, 3, 1, 5,12,-1, 2, 7, 1, 4,-1,-1,-1, 2,-1, 5, 6\n"
                     "8, 6, 2, 4,12, 8, 9, 9, 7, 1, 2, 8, 8, 2, 4, 2, 1, 7, 6, 8, 3,-1, 8, 1, 8, 6, 1, 3, 3, 2, 7, 3, 4, 2, 9,12, 2\n"
@@ -52,25 +56,22 @@ int boot::Main::main(int argc, char **argv) {
                     "0,0\n"
                     "36,36\n"
                     "end");
-    MatrixProblem matrix_p(m);
-    DFS<double> dfs;
-    BestFirstSearch<double> b;
-    BFS<double> bfs;
-    Astar<double> astar;
-    MatrixSolverOA solver(&b);
-    MatrixSolution matrix_solution = solver.solve(&matrix_p);
-    matrix_solution.edit_solution_representation();
-    std::cout <<  matrix_solution.get_solution();
+    */
+    if (argc != 2) {
+      std::cerr << "Wrong amount of arguments received";
+      return 1;
+    }
+    // convert a string to integer
+    char *temp;
+    int port_num = (int) strtol(argv[1], &temp, 10);
 
-    /*State<double> state1(0, 5);
-    state1.set_parent(nullptr);
-    State<double> state2(1, 43);
-    state2.set_parent(&state1);
-    State<double> state3(2, 23);
-    state3.set_parent(&state2);
-    State<double> state4(3, 88);
-    state4.set_parent(&state3);
-    MatrixSolution solution(&state4);
-    solution.edit_solution_representation();
-    std::cout << solution.get_solution() << std::endl;*/
+    BestFirstSearch<double> best_first_search;
+    MatrixSolverOA solver(&best_first_search);
+    FileCacheManager<std::string> cache_manager;
+    MyClientHandler client_handler(&solver, &cache_manager);
+    MySerialServer myServer;
+    myServer.open(port_num, client_handler);
+
+    std::this_thread::sleep_for(std::chrono::seconds(50000));
+    return 0;
 }

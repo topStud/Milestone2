@@ -28,19 +28,15 @@ class FileCacheManager : public CacheManager<Value> {
 
 template <typename Value>
 bool FileCacheManager<Value>::exist_in_cache(std::string key) {
-  auto* iter = _cache.find(key);
-  if (iter != _cache.end()) {
-    return true;
-  } else {
-    return false;
-  }
+  auto iter = _cache.find(key);
+  return iter != _cache.end();
 }
 
 template <typename Value>
 void FileCacheManager<Value>::save(std::string key, Value value) {
   if (exist_in_cache(key)) {
     least_recently_list.remove(key);
-    least_recently_list.pop_front(key);
+    least_recently_list.push_front(key);
     _cache[key].second = least_recently_list.begin();
     _cache[key].first = value;
   } else {
@@ -102,14 +98,16 @@ Value FileCacheManager<Value>::read_from_file(std::string key, Value value) {
   }
 
   // read key's value
-  in_file.read((char*) &value, sizeof(value));
+  //in_file.read((char*) &value, sizeof(value));
+  in_file >> value;
   in_file.close();
   return value;
 }
 
 template <typename  Value>
 void FileCacheManager<Value>::write_value_to_file(std::string key, Value value) {
-  std::ofstream out_file{key, std::ios::binary};
+  std::ofstream out_file;
+  out_file.open(key);
 
   // checks if the file opened successfully
   if (!out_file.is_open()) {
@@ -121,7 +119,8 @@ void FileCacheManager<Value>::write_value_to_file(std::string key, Value value) 
     throw "error";
   }
 
-  out_file.write((char *) &value, sizeof(value));
+  //out_file.write((char *) &value, sizeof(value));
+  out_file << value;
   out_file.close();
 }
 

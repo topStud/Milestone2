@@ -31,7 +31,7 @@ void MySerialServer::open(int port,ClientHandler &clientHandler)
 
 void MySerialServer::runServer(ClientHandler *clientHandler)
 {
-    while(m_stopFlag==false)
+    while(!m_stopFlag)
     {
         if (listen(m_serverSocket, 1) == -1) {
             throw "Error during listening command";

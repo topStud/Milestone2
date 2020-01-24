@@ -10,6 +10,8 @@
 #include <algorithm>
 #include <utility>
 #include <vector>
+#include <iostream>
+#include <regex>
 
 #include "Searchable.h"
 #include "State.h"
@@ -19,11 +21,15 @@ class MatrixProblem : public Searchable<double>{
     State<double>* goal_state;
     int rows;
     int cols;
+    std::string name;
     void matrix_from_str(const std::string& str);
+    static bool is_number(const std::string& str);
 public:
-    explicit MatrixProblem(const std::string& matrix) : init_state(nullptr), goal_state(nullptr), rows(0), cols(0) {matrix_from_str(matrix);}
+    static int counter;
+    explicit MatrixProblem(const std::string& matrix);
     State<double>* get_init_state() override;
     State<double>* get_goal() override;
+    std::string get_name() override;
     std::vector<State<double>*> create_successors(State<double>* current_state) override;
 };
 

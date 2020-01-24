@@ -4,9 +4,13 @@
 
 #include "MatrixSolution.h"
 void MatrixSolution::edit_solution_representation() {
-  std::string result = recursion_path(this->state_);
-  release_solution();
-  this->solution = result.substr(0, result.length() - 2);
+  if (this->state_ != nullptr) {
+    std::string result = recursion_path(this->state_);
+    release_solution();
+    this->solution = result.substr(0, result.length() - 2);
+  } else {
+    this->solution = "There is no path that can reach the target";
+  }
 }
 
 void MatrixSolution::release_solution() {
@@ -16,9 +20,8 @@ void MatrixSolution::release_solution() {
         this->state_ = tmp;
         tmp = tmp->get_parent();
     }
-    if (this->state_ != nullptr) {
-        delete this->state_;
-    }
+    delete this->state_;
+
 }
 std::string MatrixSolution::recursion_path(State<double> *state) {
   std::string  str{}, direction{};
