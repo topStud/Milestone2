@@ -57,6 +57,8 @@ int boot::Main::main(int argc, char **argv) {
                     "36,36\n"
                     "end");
     */
+
+
     if (argc != 2) {
       std::cerr << "Wrong amount of arguments received";
       return 1;

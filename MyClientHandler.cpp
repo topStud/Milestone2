@@ -9,7 +9,9 @@
 #include "MatrixHashTable.h"
 
 void MyClientHandler::handle_client(int client_socket) {
-    char buffer[1024] = "";
+    std::regex r(".*[end]+\n?.*");
+    char buffer[1025] = "";
+    buffer[1024] = '\0';
     std::string matrix{}, temp{}, solution{}, sub_str{}, matrix_name{};
     bool stop_loop = false;
     int index;
@@ -23,13 +25,18 @@ void MyClientHandler::handle_client(int client_socket) {
           sub_str = temp.substr(0, index) + "\n";
           matrix += sub_str;
           temp = temp.substr(index+2);
-          if ((index = temp.find("end")) != std::string::npos) {
+          //if ((index = temp.find('e')) != std::string::npos || (index = temp.find('n')) != std::string::npos || (index = temp.find('d')) != std::string::npos
+          //|| (index = temp.find("\ne")) != std::string::npos || (index = temp.find("d\r")) != std::string::npos) {
+          if (std::regex_match(sub_str, r)) {
             stop_loop = true;
-            temp = temp.substr(0, index);
+            //temp = temp.substr(0, index);
+            break;
           }
         }
+        memset(buffer, 0 , sizeof(buffer));
     } while (!stop_loop);
-    matrix += "end";
+    //if (matrix[matrix.length() - 1] == '\n')
+      //matrix += "end";
     if (MatrixHashTable::get_instance()->does_matrix_exist(matrix)) {
       matrix_name = MatrixHashTable::get_instance()->get_matrix_name(matrix);
       if(this->cache_manager_->exist_in_cache(matrix_name)) {

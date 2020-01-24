@@ -45,8 +45,7 @@ void MatrixProblem::matrix_from_str(const std::string& string) {
         std::stringstream ss2(row_str);
         while(getline(ss2, node, ',')) {
             node.erase(remove_if(node.begin(), node.end(), isspace), node.end());
-            if (is_number(node))
-              vec.push_back(strtod(node.c_str(), nullptr));
+            vec.push_back(strtod(node.c_str(), nullptr));
         }
         this->matrix.push_back(vec);
         vec.clear();
