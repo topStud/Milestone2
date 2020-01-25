@@ -2,13 +2,13 @@
 #define MILESTONE2_SERVER_H
 
 #include "ClientHandler.h"
-
+#include <vector>
 namespace server_side
 {
     class Server
     {
         public:
-        virtual void open(int port,ClientHandler &clientHandler)= 0;
+        virtual void open(int port,std::vector<ClientHandler*> clientHandlerVec)= 0;
         virtual void stop()= 0;
         virtual ~Server()= default;
     };

@@ -1,6 +1,9 @@
+//
+// Created by sigalit on 25.1.2020.
+//
 
-#ifndef MILESTONE2_MYSERIALSERVER_H
-#define MILESTONE2_MYSERIALSERVER_H
+#ifndef MILESTONE2_MYPARALLELSERVER_H
+#define MILESTONE2_MYPARALLELSERVER_H
 
 #include "Server.h"
 #include <sys/socket.h>
@@ -11,19 +14,20 @@
 
 namespace server_side {
 
-    class MySerialServer : public Server {
+    class MyParallelServer : public Server {
 
     private:
         int m_serverSocket;
         sockaddr_in address;
         bool m_stopFlag;
     public:
-        MySerialServer();
+        MyParallelServer();
 
-        void runServer(ClientHandler *clientHandler);
+        void runServer(std::vector<ClientHandler*> clientHandlerVec);
         virtual void open(int port, std::vector<ClientHandler*> clientHandlerVec);
         virtual void stop();
+        void runClientHandler(int clientSd, ClientHandler *clientHandler);
     };
 }
 
-#endif //MILESTONE2_MYSERIALSERVER_H
+#endif //MILESTONE2_MYPARALLELSERVER_H

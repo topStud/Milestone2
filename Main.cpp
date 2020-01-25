@@ -13,6 +13,11 @@
 #include "MySerialServer.h"
 #include "MyClientHandler.h"
 #include "FileCacheManager.h"
+#include "MyParallelServer.h"
+
+#define DEFAULT_PORT 5600;
+
+using namespace server_side;
 
 int boot::Main::main(int argc, char **argv) {
 
@@ -58,22 +63,38 @@ int boot::Main::main(int argc, char **argv) {
                     "end");
     */
 
-
-    if (argc != 2) {
-      std::cerr << "Wrong amount of arguments received";
-      return 1;
+    int port_num;
+    if (argc < 2) {
+        port_num = DEFAULT_PORT;
     }
-    // convert a string to integer
-    char *temp;
-    int port_num = (int) strtol(argv[1], &temp, 10);
+    else
+    {
+        // convert a string to integer
+        char *temp;
+        port_num = (int) strtol(argv[1], &temp, 10);
+    }
 
-    BestFirstSearch<double> best_first_search;
-    MatrixSolverOA solver(&best_first_search);
+    //BestFirstSearch<double> best_first_search;
+    //MatrixSolverOA solver(&best_first_search);
     FileCacheManager<std::string> cache_manager;
-    MyClientHandler client_handler(&solver, &cache_manager);
-    MySerialServer myServer;
-    myServer.open(port_num, client_handler);
+    std::vector<ClientHandler*> client_handler_vec;
+    std::vector<MatrixSolverOA*> solver_vec;
+    std::vector<BestFirstSearch<double>*> best_f_s_vec;
+
+    for (int j = 0; j < 10; ++j) {
+        best_f_s_vec.push_back(new BestFirstSearch<double>());
+        solver_vec.push_back(new MatrixSolverOA(best_f_s_vec[j]));
+        client_handler_vec.push_back(new MyClientHandler(solver_vec[j], &cache_manager));
+    }
+    //MySerialServer myServer;
+    MyParallelServer myServer;
+    myServer.open(port_num, client_handler_vec);
 
     std::this_thread::sleep_for(std::chrono::seconds(50000));
+    for (int i = 0; i < client_handler_vec.size(); ++i) {
+        delete best_f_s_vec[i];
+        delete solver_vec[i];
+        delete client_handler_vec[i];
+    }
     return 0;
 }

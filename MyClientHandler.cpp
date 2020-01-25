@@ -18,10 +18,10 @@ void MyClientHandler::handle_client(int client_socket) {
             std::cerr << "Error reading from client" << std::endl;
         }
         temp += buffer;
-        while ((index = temp.find("\r\n")) != std::string::npos) {
-          sub_str = temp.substr(0, index) + "\n";
+        while ((index = temp.find("\n")) != std::string::npos) {
+          sub_str = temp.substr(0, index+1);
           matrix += sub_str;
-          temp = temp.substr(index+2);
+          temp = temp.substr(index+1);
           if (std::regex_match(sub_str, r)) {
             stop_loop = true;
             break;

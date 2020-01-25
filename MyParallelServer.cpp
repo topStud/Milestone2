@@ -1,12 +1,15 @@
+//
+// Created by sigalit on 25.1.2020.
+//
 
-#include "MySerialServer.h"
+#include "MyParallelServer.h"
 using namespace server_side;
-MySerialServer::MySerialServer()
+MyParallelServer::MyParallelServer()
 {
     m_stopFlag= false;
 }
 
-void MySerialServer::open(int port,std::vector<ClientHandler*> clientHandlerVec)
+void MyParallelServer::open(int port,std::vector<ClientHandler*> clientHandlerVec)
 {
     m_serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (m_serverSocket == -1)
@@ -25,15 +28,16 @@ void MySerialServer::open(int port,std::vector<ClientHandler*> clientHandlerVec)
         throw "Could not bind the socket to an IP";
     }
 
-    std::thread server_thread(&MySerialServer::runServer,this,clientHandlerVec[0]);
+    std::thread server_thread(&MyParallelServer::runServer,this,clientHandlerVec);
     server_thread.detach();
 }
 
-void MySerialServer::runServer(ClientHandler *clientHandler)
+void MyParallelServer::runServer(std::vector<ClientHandler*> clientHandlerVec)
 {
+    std::vector<std::thread> threads;
     while(!m_stopFlag)
     {
-        if (listen(m_serverSocket, 1) == -1) {
+        if (listen(m_serverSocket, 10) == -1) {
             throw "Error during listening command";
         } else{
             std::cout<<"Server is now listening ..."<<std::endl;
@@ -47,22 +51,31 @@ void MySerialServer::runServer(ClientHandler *clientHandler)
 
         // accepting a client
         int clientSocket = accept(m_serverSocket, (struct sockaddr *)&address,
-                                (socklen_t*)&address);
+                                  (socklen_t*)&address);
 
         if (clientSocket == -1) {
             std::cout << "No client accepted"<< std::endl;
             stop();
         } else {
             std::cout << "Client accepted" << std::endl;
-            clientHandler->handle_client(clientSocket);
-            close(clientSocket);
+            threads.push_back(std::thread(&MyParallelServer::runClientHandler,this, clientSocket,clientHandlerVec[0]));
         }
     }
     std::cout << "Closing the listening socket"<<std::endl;
     close(m_serverSocket);
+    for (auto&& t : threads) {
+        t.join();
+    }
 }
 
-void MySerialServer::stop()
+void MyParallelServer::runClientHandler(int clientSd, ClientHandler* clientHandler)
+{
+    clientHandler->handle_client(clientSd);
+    close(clientSd);
+}
+
+
+void MyParallelServer::stop()
 {
     m_stopFlag = true;
 }
