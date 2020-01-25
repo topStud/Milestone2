@@ -21,6 +21,7 @@ class MatrixSolverOA : public Solver<Searchable<double>, MatrixSolution> {
   explicit MatrixSolverOA(Searcher<double>* searcher) : searcher_(searcher), nodes_num(0) {}
   MatrixSolution solve(Searchable<double>* searchable) override;
   int get_number_of_nodes_evaluated() override {return nodes_num;}
+  std::string get_name() override {return searcher_->get_name();}
 };
 
 #endif //MILESTONE2__MATRIXSOLVEROA_H_

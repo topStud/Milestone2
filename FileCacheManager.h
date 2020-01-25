@@ -16,8 +16,8 @@ template <typename Value>
 class FileCacheManager : public CacheManager<Value> {
   std::list<std::string> least_recently_list;
   std::unordered_map<std::string, std::pair<Value, std::list<std::string>::iterator>> _cache;
-  void write_value_to_file(std::string  key, Value value);
-  Value read_from_file(std::string key, Value value);
+  void write_value_to_file(const std::string&  key, Value value);
+  Value read_from_file(const std::string& key, Value value);
   void erase_least_recently_used();
   void add_most_recently_used(std::string key, Value value);
  public:
@@ -28,13 +28,23 @@ class FileCacheManager : public CacheManager<Value> {
 
 template <typename Value>
 bool FileCacheManager<Value>::exist_in_cache(std::string key) {
-  auto iter = _cache.find(key);
-  return iter != _cache.end();
+  if (_cache.find(key) != _cache.end())
+    return true;
+  else {
+    std::ifstream in_file;
+    in_file.open(key);
+
+    if (in_file.is_open()) {
+      in_file.close();
+      return true;
+    }
+  }
+  return false;
 }
 
 template <typename Value>
 void FileCacheManager<Value>::save(std::string key, Value value) {
-  if (exist_in_cache(key)) {
+  if (_cache.find(key) != _cache.end()) {
     least_recently_list.remove(key);
     least_recently_list.push_front(key);
     _cache[key].second = least_recently_list.begin();
@@ -63,7 +73,7 @@ void FileCacheManager<Value>::erase_least_recently_used() {
 template <typename Value>
 Value FileCacheManager<Value>::get(std::string key) {
   // if in cache, updates the key to be most recently used
-  if (exist_in_cache(key)) {
+  if (_cache.find(key) != _cache.end()) {
     least_recently_list.remove(key);
     least_recently_list.push_front(key);
     _cache[key].second = least_recently_list.begin();
@@ -83,7 +93,7 @@ Value FileCacheManager<Value>::get(std::string key) {
 }
 
 template <typename Value>
-Value FileCacheManager<Value>::read_from_file(std::string key, Value value) {
+Value FileCacheManager<Value>::read_from_file(const std::string& key, Value value) {
   std::ifstream in_file;
   in_file.open(key);
 
@@ -98,14 +108,13 @@ Value FileCacheManager<Value>::read_from_file(std::string key, Value value) {
   }
 
   // read key's value
-  //in_file.read((char*) &value, sizeof(value));
   in_file >> value;
   in_file.close();
   return value;
 }
 
 template <typename  Value>
-void FileCacheManager<Value>::write_value_to_file(std::string key, Value value) {
+void FileCacheManager<Value>::write_value_to_file(const std::string& key, Value value) {
   std::ofstream out_file;
   out_file.open(key);
 
@@ -119,7 +128,6 @@ void FileCacheManager<Value>::write_value_to_file(std::string key, Value value) 
     throw "error";
   }
 
-  //out_file.write((char *) &value, sizeof(value));
   out_file << value;
   out_file.close();
 }

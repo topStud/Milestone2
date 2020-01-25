@@ -20,9 +20,9 @@ bool MatrixHashTable::does_matrix_exist(const std::string& matrix_str) {
 }
 
 std::string MatrixHashTable::get_matrix_name(const std::string& matrix_str) {
-  return matrix_map[matrix_str];
+  return std::to_string(matrix_map[matrix_str]);
 }
 
-void MatrixHashTable::add_to_table(const std::string& matrix_str, const std::string& matrix_name) {
-  matrix_map.insert({matrix_str, matrix_name});
+void MatrixHashTable::add_to_table(const std::string& matrix_str) {
+  matrix_map.insert({matrix_str, hash_(matrix_str)});
 }

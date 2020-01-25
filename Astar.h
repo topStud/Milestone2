@@ -19,7 +19,10 @@ protected:
             eRight.second->get_cost() + eRight.second->get_heuristic_cost();
         };
     }
-
+ public:
+  std::string get_name() override {
+    return "AStar_";
+  }
 };
 
 #endif //MILESTONE2_ASTAR_H

@@ -10,6 +10,7 @@ class Solver {
  public:
   virtual Solution solve(Problem* problem) = 0;
   virtual int get_number_of_nodes_evaluated() = 0;
+  virtual std::string get_name() = 0;
 };
 
 #endif //MILESTONE2__SOLVER_H_

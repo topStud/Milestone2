@@ -69,16 +69,9 @@ class DFS : public  Searcher<T> {
     }
     return nullptr;
   }
-
-  /*~DFS() {
-    while (!stack_nodes.empty()) {
-      delete stack_nodes.top();
-      stack_nodes.pop();
-    }
-    for (std::pair<T, State<T>*> element :finished_nodes) {
-      delete element.second;
-    }
-  }*/
+  std::string get_name() override {
+    return "DFS_";
+  }
 };
 
 #endif //MILESTONE2__DFS_H_

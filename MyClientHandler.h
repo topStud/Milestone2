@@ -8,11 +8,14 @@
 #include <string>
 #include <cstring>
 #include <unistd.h>
+#include <sys/socket.h>
 
 #include "MatrixProblem.h"
 #include "MatrixSolverOA.h"
 #include "ClientHandler.h"
 #include "CacheManager.h"
+#include "BestFirstSearch.h"
+#include "MatrixHashTable.h"
 
 class MyClientHandler : public ClientHandler{
     Solver<Searchable<double>, MatrixSolution>* solver_;

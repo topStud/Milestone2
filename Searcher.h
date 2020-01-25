@@ -14,6 +14,7 @@ class Searcher {
  public:
     virtual State<T>* search(Searchable<T>& s) = 0;
     virtual int getNumberOfNodesEvaluated()= 0;
+    virtual std::string get_name() = 0;
 };
 
 #endif //MILESTONE2__SEARCHER_H_

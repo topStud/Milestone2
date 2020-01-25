@@ -7,13 +7,14 @@
 
 #include <unordered_map>
 class MatrixHashTable {
-  std::unordered_map<std::string, std::string> matrix_map;
+  std::unordered_map<std::string, int> matrix_map;
+  std::hash<std::string> hash_;
   static MatrixHashTable* collection_;
   MatrixHashTable()= default;
  public:
   static MatrixHashTable* get_instance();
   ~MatrixHashTable();
-  void add_to_table(const std::string& matrix_str, const std::string& matrix_name);
+  void add_to_table(const std::string& matrix_str);
   bool does_matrix_exist(const std::string& matrix_str);
   std::string get_matrix_name(const std::string& matrix_str);
 };

@@ -18,7 +18,10 @@ protected:
             return eLeft.second->get_degree() <= eRight.second->get_degree();
         };
     }
-
+ public:
+  std::string get_name() override {
+    return "BFS_";
+  }
 };
 
 

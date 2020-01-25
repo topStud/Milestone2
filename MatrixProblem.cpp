@@ -3,8 +3,6 @@
 //
 
 #include "MatrixProblem.h"
-#include "MatrixHashTable.h"
-int MatrixProblem::counter = 0;
 
 State<double>* MatrixProblem::get_init_state() {
     return this->init_state;
@@ -14,24 +12,13 @@ State<double>* MatrixProblem::get_goal() {
     return this->goal_state;
 }
 
-std::string MatrixProblem::get_name() {
-  return "Matrix_Problem_" + std::to_string(counter);
-}
-
-bool MatrixProblem::is_number(const std::string& str) {
-  std::regex r("-?([0-9]+|[0-9]+.[0-9])");
-  return std::regex_match(str, r);
-}
-
 MatrixProblem::MatrixProblem(const std::string& matrix) {
   init_state = nullptr;
   goal_state = nullptr;
   rows = 0;
   cols = 0;
-  name = "";
-  counter++;
   matrix_from_str(matrix);
-  MatrixHashTable::get_instance()->add_to_table(matrix, this->get_name());
+  MatrixHashTable::get_instance()->add_to_table(matrix);
 }
 
 void MatrixProblem::matrix_from_str(const std::string& string) {
@@ -77,6 +64,7 @@ std::vector<State<double>*> MatrixProblem::create_successors(State<double>* curr
     double value;
     int id = current_state->get_id();
     int row,col;
+
     // left
     if ((id % this-> cols) != 1) {
         row = (id - 1) / this->cols;
@@ -122,11 +110,11 @@ std::vector<State<double>*> MatrixProblem::create_successors(State<double>* curr
         }
     }
 
-    for (int i = 0; i < vec.size(); ++i) {
-        vec[i]->set_parent(current_state);
-        vec[i]->set_cost(current_state->get_cost() + vec[i]->get_value());
-        vec[i]->set_heuristic_cost(abs(vec[i]->get_row()-goal_state->get_row()) +
-        abs(vec[i]->get_col()-goal_state->get_col()));
+    for (auto & i : vec) {
+        i->set_parent(current_state);
+        i->set_cost(current_state->get_cost() + i->get_value());
+        i->set_heuristic_cost(abs(i->get_row()-goal_state->get_row()) +
+        abs(i->get_col()-goal_state->get_col()));
     }
     return vec;
 }

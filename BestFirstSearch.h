@@ -112,6 +112,9 @@ public:
     }
 
     int getNumberOfNodesEvaluated() { return m_evaluatedNodes;}
+    virtual std::string get_name() {
+      return "BestFirstSearch_";
+    }
 
 };
 
