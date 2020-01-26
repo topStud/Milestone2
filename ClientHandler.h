@@ -8,6 +8,7 @@
 class ClientHandler {
  public:
   virtual void handle_client(int client_sockfd) = 0;
+  ~ClientHandler() = default;
 };
 
 #endif //MILESTONE2__CLIENTHANDLER_H_

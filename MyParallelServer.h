@@ -22,7 +22,6 @@ namespace server_side {
         bool m_stopFlag;
     public:
         MyParallelServer();
-
         void runServer(std::vector<ClientHandler*> clientHandlerVec);
         virtual void open(int port, std::vector<ClientHandler*> clientHandlerVec);
         virtual void stop();

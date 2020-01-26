@@ -96,5 +96,6 @@ int boot::Main::main(int argc, char **argv) {
         delete solver_vec[i];
         delete client_handler_vec[i];
     }
+    MatrixHashTable::get_instance()->save_table();
     return 0;
 }
