@@ -5,6 +5,11 @@
 #include "TestClientHandler.h"
 bool TestClientHandler::stop_flag = false;
 
+/**
+ * handle_client function.
+ * reads a string from a client and returns the client a reversed string.
+ * @param client_sd
+ */
 void TestClientHandler::handle_client(int client_sd) {
   char buffer[1024];
   std::string problem{}, solution{};

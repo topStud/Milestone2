@@ -4,14 +4,27 @@
 
 #include "MatrixProblem.h"
 
+/**
+ * get_init_state function.
+ * @return init state - the node we are told to start with.
+ */
 State<double>* MatrixProblem::get_init_state() {
     return this->init_state;
 }
 
+/**
+ * get_goal function.
+ * @return goal state - the node we are told to reach at the end.
+ */
 State<double>* MatrixProblem::get_goal() {
     return this->goal_state;
 }
 
+/**
+ * constructor, initializes the fields and adds matrix to the matrix collection.
+ * sends the matrix to be converted from a string to a vector of vectors structure.
+ * @param matrix - a string that represents a matrix.
+ */
 MatrixProblem::MatrixProblem(const std::string& matrix) {
   init_state = nullptr;
   goal_state = nullptr;
@@ -21,6 +34,14 @@ MatrixProblem::MatrixProblem(const std::string& matrix) {
   MatrixHashTable::get_instance()->add_to_table(matrix);
 }
 
+/**
+ * matrix_from_str function.
+ * reads each line of the string and converts the line to a vector of numbers.
+ * the three last lines represent - 1) initial location in matrix.
+ *                                  2) goal location in matrix.
+ *                                  3) the word "end"
+ * @param string - a string that represents a matrix.
+ */
 void MatrixProblem::matrix_from_str(const std::string& string) {
     int init_row, init_col, goal_row, goal_col, count_rows = -3;
     std::vector<double> vec;
@@ -59,6 +80,12 @@ void MatrixProblem::matrix_from_str(const std::string& string) {
     this->init_state->set_heuristic_cost(abs(init_row-goal_row) + abs(init_col-goal_col));
 }
 
+/**
+ * create_successors function.
+ * creates states according to the current given node - neighbors.
+ * @param current_state - the node given - current cell in the matrix.
+ * @return a vector of the neighbors.
+ */
 std::vector<State<double>*> MatrixProblem::create_successors(State<double>* current_state) {
     std::vector<State<double>*> vec;
     double value;

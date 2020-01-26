@@ -4,11 +4,21 @@
 
 #include "MyParallelServer.h"
 using namespace server_side;
+
+/**
+ *  constructor.
+ *  initializes the flag.
+ */
 MyParallelServer::MyParallelServer()
 {
     m_stopFlag= false;
 }
 
+/**
+ * open function- creates a socket and binds it to the port.
+ * @param port - port number
+ * @param clientHandlerVec - vector containing many(10) client handlers
+ */
 void MyParallelServer::open(int port,std::vector<ClientHandler*> clientHandlerVec)
 {
     m_serverSocket = socket(AF_INET, SOCK_STREAM, 0);
@@ -32,6 +42,11 @@ void MyParallelServer::open(int port,std::vector<ClientHandler*> clientHandlerVe
     server_thread.detach();
 }
 
+/**
+ * runServer function - waits for clients and accepts them.
+ * creates a separate thread for each client.
+ * @param clientHandlerVec - vector containing many(10) client handlers
+ */
 void MyParallelServer::runServer(std::vector<ClientHandler*> clientHandlerVec)
 {
     std::vector<std::thread> threads;
@@ -68,13 +83,22 @@ void MyParallelServer::runServer(std::vector<ClientHandler*> clientHandlerVec)
     }
 }
 
+/**
+ * runClientHandler function - calls a function that handles the client
+ * @param clientSd - client socket.
+ * @param clientHandler - the client handler object that will handle this specific client.
+ */
 void MyParallelServer::runClientHandler(int clientSd, ClientHandler* clientHandler)
 {
     clientHandler->handle_client(clientSd);
     close(clientSd);
 }
 
-
+/**
+ * stop function.
+ * sets the value of the flag to true.
+ * it happens when we want to terminate the main loop.
+ */
 void MyParallelServer::stop()
 {
     m_stopFlag = true;

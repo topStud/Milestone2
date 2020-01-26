@@ -6,6 +6,11 @@
 #define MILESTONE2__SOLUTION_H_
 
 #include <string>
+
+/**
+ * Solution interface.
+ * @tparam T
+ */
 template <typename T>
 class Solution {
     virtual void edit_solution_representation() = 0;

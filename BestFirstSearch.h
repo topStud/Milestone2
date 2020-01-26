@@ -9,6 +9,13 @@
 #include "Searcher.h"
 #include <iostream>
 
+/**
+ * BestFirstSearch class.
+ * the class implements the searcher interface.
+ * has an algorithm for finding the best path
+ * from initial node to goal node.
+ * @tparam T
+ */
 template <typename T>
 class BestFirstSearch : public Searcher<T>{
 
@@ -20,11 +27,23 @@ private:
     Iterator iter;
 
 protected:
+    /**
+     * getCompareFunction function determines
+     * the compare function the algorithm will use.
+     * @return the compare function.
+     */
     virtual std::function<bool(pair,pair)> getCompareFunction()
     {
         return [](pair eLeft, pair eRight){ return eLeft.second->get_cost() <= eRight.second->get_cost();};
     }
 
+    /**
+     * releaseClosedMap function.
+     * removes all the nodes which are part of the best
+     * path from the initial node to the goal- from the map.
+     * and then releases the rest of nodes.
+     * @param the gaol node.
+     */
     void releaseClosedMap(State<T>* node)
     {
         State<T>* tmp_node = node;
@@ -46,9 +65,17 @@ protected:
 
 
 public:
-
+    /**
+     * constructor function, initiates the node number.
+     */
     BestFirstSearch(): m_evaluatedNodes(0) {}
 
+    /**
+     * search function.
+     * finds the best path to the goal node.
+     * @param s searchable.
+     * @return the goal node.
+     */
     State<T>* search(Searchable<T>& s) override {
         auto func = getCompareFunction();
         std::map<pair, T, decltype(func)> openList(func);
@@ -65,8 +92,6 @@ public:
 
             if(*node==s.get_goal())
             {
-                // todo - add new function to remove all nodes of the solution path from closed map, then,
-                //  delete the rest of the nodes from openList and closed and clear both maps
                 for (std::pair<pair,T> element : openList) {
                     delete element.first.second;
                 }
@@ -95,6 +120,7 @@ public:
                 }
                 else
                 {
+                    // the path of the node can be improved
                     if (in_openList && !func(iter->first, {c->get_id(),c})) {
                         openList.erase(iter);
                         openList.insert({{c->get_id(), c},c->get_id()});
@@ -102,17 +128,26 @@ public:
                     }
                     else
                     {
+                        // the node exists with a better path
                         delete c;
                     }
                 }
             }
         }
+        // returns null if the goal is unreachable.
         std::cout<<"Not Found!"<<std::endl;
         return NULL;
     }
-
+    /**
+     * getNumberOfNodesEvaluated function.
+     * @return number of visited nodes during the search.
+     */
     int getNumberOfNodesEvaluated() { return m_evaluatedNodes;}
-    virtual std::string get_name() {
+    /**
+     * get_name function.
+     * @return name of the algorithm- BestFS.
+     */
+     virtual std::string get_name() {
       return "BestFirstSearch_";
     }
 

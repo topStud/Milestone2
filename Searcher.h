@@ -9,6 +9,10 @@
 #include "Searchable.h"
 #include "State.h"
 
+/**
+ * Searcher interface.
+ * @tparam T
+ */
 template <typename T>
 class Searcher {
  public:

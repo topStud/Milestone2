@@ -3,6 +3,12 @@
 //
 
 #include "MatrixSolution.h"
+
+/**
+ * edit_solution_representation function.
+ * responsible for the representation of the matrix solution.
+ * calls the recursion function.
+ */
 void MatrixSolution::edit_solution_representation() {
   if (this->state_ != nullptr) {
     std::string result = recursion_path(this->state_);
@@ -13,6 +19,11 @@ void MatrixSolution::edit_solution_representation() {
   }
 }
 
+/**
+ * release_solution function.
+ * after the solution is available, we release the memory
+ * occupied the the nodes of the path that the algorithm found.
+ */
 void MatrixSolution::release_solution() {
     State<double> *tmp = this->state_->get_parent();
     while (tmp != nullptr) {
@@ -23,6 +34,12 @@ void MatrixSolution::release_solution() {
     delete this->state_;
 
 }
+
+/**
+ * recursion function for translating the solution from a vector of stated tto a string.
+ * @param state - the goal state.
+ * @return returns a string representation of the path.
+ */
 std::string MatrixSolution::recursion_path(State<double> *state) {
   std::string  str{}, direction{};
   // parent of the initiate state

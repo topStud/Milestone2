@@ -5,10 +5,21 @@
 #include <fstream>
 #include "MatrixHashTable.h"
 MatrixHashTable* MatrixHashTable::collection_ = nullptr;
+
+/**
+ * destructor.
+ * releases the memory of the only instance- collection_
+ */
 MatrixHashTable::~MatrixHashTable() {
   delete collection_;
 }
 
+/**
+ * get_instance function.
+ * if there is no instance created yet, creates a new one.
+ * otherwise returns the existing one.
+ * @return
+ */
 MatrixHashTable* MatrixHashTable::get_instance() {
   if (collection_ == nullptr) {
     collection_ = new MatrixHashTable;
@@ -16,18 +27,39 @@ MatrixHashTable* MatrixHashTable::get_instance() {
   return collection_;
 }
 
+/**
+ * does_matrix_exist function.
+ * @param matrix_str - a matrix represented by a string.
+ * @return true- matrix exists, false- otherwise.
+ */
 bool MatrixHashTable::does_matrix_exist(const std::string& matrix_str) {
   return matrix_map.find(matrix_str) != matrix_map.end();
 }
 
+/**
+ * get_matrix_name function.
+ * @param matrix_str - a matrix represented by a string.
+ * @return returns the unique name given to the matrix by hash table.
+ */
 std::string MatrixHashTable::get_matrix_name(const std::string& matrix_str) {
   return std::to_string(matrix_map[matrix_str]);
 }
 
+/**
+ * add_to_table function.
+ * determines the matrix's new name and adds it to the map.
+ * @param matrix_str - a matrix represented by a string.
+ */
 void MatrixHashTable::add_to_table(const std::string& matrix_str) {
   matrix_map.insert({matrix_str, hash_(matrix_str)});
 }
 
+/**
+ * reload_table function.
+ * reads from a special file called SAVE_FILE
+ * that contains all the matrices already created.
+ * enters the data to the map.
+ */
 void MatrixHashTable::reload_table() {
   std::ifstream in_file;
   std::string temp{}, matrix_str{};
@@ -48,6 +80,11 @@ void MatrixHashTable::reload_table() {
   }
 }
 
+/**
+ * save_table function.
+ * writes all the data in the map to a special
+ * file called SAVE_FILE.
+ */
 void MatrixHashTable::save_table() {
   std::ofstream out_file;
   out_file.open(SAVE_FILE);

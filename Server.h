@@ -5,6 +5,9 @@
 #include <vector>
 namespace server_side
 {
+    /**
+    * Server interface.
+    */
     class Server
     {
         public:

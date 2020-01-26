@@ -5,6 +5,11 @@
 #ifndef MILESTONE2__SOLVER_H_
 #define MILESTONE2__SOLVER_H_
 
+/**
+ * solver interface
+ * @tparam Problem
+ * @tparam Solution
+ */
 template <typename Problem, typename Solution>
 class Solver {
  public:

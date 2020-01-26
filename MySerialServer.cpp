@@ -1,11 +1,21 @@
 
 #include "MySerialServer.h"
 using namespace server_side;
+
+/**
+ *  constructor.
+ *  initializes the flag.
+ */
 MySerialServer::MySerialServer()
 {
     m_stopFlag= false;
 }
 
+/**
+ * open function- creates a socket and binds it to the port.
+ * @param port - port number
+ * @param clientHandlerVec - vector containing many(10) client handlers
+ */
 void MySerialServer::open(int port,std::vector<ClientHandler*> clientHandlerVec)
 {
     m_serverSocket = socket(AF_INET, SOCK_STREAM, 0);
@@ -29,6 +39,11 @@ void MySerialServer::open(int port,std::vector<ClientHandler*> clientHandlerVec)
     server_thread.detach();
 }
 
+/**
+ * runServer function - waits for clients and accepts them.
+ * creates a separate thread for each client.
+ * @param clientHandlerVec - vector containing many(10) client handlers
+ */
 void MySerialServer::runServer(ClientHandler *clientHandler)
 {
     while(!m_stopFlag)
@@ -62,6 +77,11 @@ void MySerialServer::runServer(ClientHandler *clientHandler)
     close(m_serverSocket);
 }
 
+/**
+ * stop function.
+ * sets the value of the flag to true.
+ * it happens when we want to terminate the main loop.
+ */
 void MySerialServer::stop()
 {
     m_stopFlag = true;

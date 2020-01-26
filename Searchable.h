@@ -7,6 +7,11 @@
 
 #include <vector>
 #include "State.h"
+
+/**
+ * Searchable interface
+ * @tparam T
+ */
 template <typename T>
 class Searchable {
 public:

@@ -7,6 +7,14 @@
 
 #include "BestFirstSearch.h"
 #include "MatrixProblem.h"
+#include "MatrixSolution.h"
+#include "MatrixSolverOA.h"
+#include "BFS.h"
+#include "Server.h"
+#include "MySerialServer.h"
+#include "MyClientHandler.h"
+#include "FileCacheManager.h"
+#include "MyParallelServer.h"
 
 namespace boot {
 

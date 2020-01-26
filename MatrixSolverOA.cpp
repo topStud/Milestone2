@@ -3,6 +3,13 @@
 //
 
 #include "MatrixSolverOA.h"
+
+/**
+ * solve function.
+ * calls to the search algorithm of the searcher and returns the solution.
+ * @param searchable
+ * @return solution represented in string.
+ */
 MatrixSolution MatrixSolverOA::solve(Searchable<double>* searchable) {
   State<double >* st = searcher_->search(*searchable);
   MatrixSolution solution(st);

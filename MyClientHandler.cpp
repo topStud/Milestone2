@@ -4,6 +4,14 @@
 
 #include "MyClientHandler.h"
 
+/**
+ * handle_client function responsible for the communication with the client.
+ * reads from the client until the client sends the word "end".
+ * checks if the solution for the clients problem exists.
+ * if existed sends the saved solution, otherwise, solves the problem,
+ * saves the solution and sends it to the client.
+ * @param client_socket
+ */
 void MyClientHandler::handle_client(int client_socket) {
     std::regex r(".*[end]+\n?.*");
     char buffer[1025] = "";
@@ -18,7 +26,7 @@ void MyClientHandler::handle_client(int client_socket) {
             std::cerr << "Error reading from client" << std::endl;
         }
         temp += buffer;
-        while ((index = temp.find("\n")) != std::string::npos) {
+        while ((index = temp.find('\n')) != std::string::npos) {
           sub_str = temp.substr(0, index+1);
           matrix += sub_str;
           temp = temp.substr(index+1);
