@@ -3,6 +3,8 @@
 
 #include "ClientHandler.h"
 #include <vector>
+#include <mutex>
+
 namespace server_side
 {
     /**
@@ -15,6 +17,8 @@ namespace server_side
         virtual void stop()= 0;
         virtual ~Server()= default;
     };
+
+    extern std::mutex server_mutex;
 }
 
 #endif //MILESTONE2_SERVER_H

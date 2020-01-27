@@ -53,10 +53,15 @@ void MyClientHandler::handle_client(int client_socket) {
         matrix_name = solver_->get_name() + MatrixHashTable::get_instance()->get_matrix_name(matrix);
         this->cache_manager_->save(matrix_name, solution);
     }
-
-    int val_write = send(client_socket, solution.c_str(), solution.length(), 0);
-    if (val_write == -1) {
-      std::cerr << "Error writing to client" << std::endl;
+    int val_write = 0;
+    int bytes_remain = solution.length();
+    while (bytes_remain > 0) {
+        val_write = send(client_socket, solution.c_str(), bytes_remain, 0);
+        if (val_write == -1) {
+            std::cerr << "Error writing to client" << std::endl;
+        }
+        bytes_remain -= val_write;
+        solution = solution.substr(val_write);
     }
 
 }

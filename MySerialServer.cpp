@@ -3,38 +3,13 @@
 using namespace server_side;
 
 /**
- *  constructor.
- *  initializes the flag.
- */
-MySerialServer::MySerialServer()
-{
-    m_stopFlag= false;
-}
-
-/**
  * open function- creates a socket and binds it to the port.
  * @param port - port number
  * @param clientHandlerVec - vector containing many(10) client handlers
  */
 void MySerialServer::open(int port,std::vector<ClientHandler*> clientHandlerVec)
 {
-    m_serverSocket = socket(AF_INET, SOCK_STREAM, 0);
-    if (m_serverSocket == -1)
-    {
-        //error
-        throw "Could not create a socket";
-    }
-
-    address.sin_family = AF_INET;
-    address.sin_addr.s_addr = INADDR_ANY;
-    address.sin_port = htons(port);
-
-    //the actual bind command
-    if (bind(m_serverSocket, (struct sockaddr *) &address, sizeof(address)) == -1)
-    {
-        throw "Could not bind the socket to an IP";
-    }
-
+    create_and_bind(port);
     std::thread server_thread(&MySerialServer::runServer,this,clientHandlerVec[0]);
     server_thread.detach();
 }
@@ -46,6 +21,7 @@ void MySerialServer::open(int port,std::vector<ClientHandler*> clientHandlerVec)
  */
 void MySerialServer::runServer(ClientHandler *clientHandler)
 {
+    server_mutex.lock();
     while(!m_stopFlag)
     {
         if (listen(m_serverSocket, 1) == -1) {
@@ -54,12 +30,7 @@ void MySerialServer::runServer(ClientHandler *clientHandler)
             std::cout<<"Server is now listening ..."<<std::endl;
         }
 
-        //Set timout of 2 minutes for server socket listening to client
-        struct timeval tv{};
-        tv.tv_sec = 120;
-        tv.tv_usec = 0;
-        int s = setsockopt(m_serverSocket, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
-
+        set_socket_timeout();
         // accepting a client
         int clientSocket = accept(m_serverSocket, (struct sockaddr *)&address,
                                 (socklen_t*)&address);
@@ -75,14 +46,5 @@ void MySerialServer::runServer(ClientHandler *clientHandler)
     }
     std::cout << "Closing the listening socket"<<std::endl;
     close(m_serverSocket);
-}
-
-/**
- * stop function.
- * sets the value of the flag to true.
- * it happens when we want to terminate the main loop.
- */
-void MySerialServer::stop()
-{
-    m_stopFlag = true;
+    server_mutex.unlock();
 }

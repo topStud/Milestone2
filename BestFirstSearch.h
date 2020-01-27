@@ -123,8 +123,8 @@ public:
                     // the path of the node can be improved
                     if (in_openList && !func(iter->first, {c->get_id(),c})) {
                         openList.erase(iter);
-                        openList.insert({{c->get_id(), c},c->get_id()});
                         delete iter->first.second;
+                        openList.insert({{c->get_id(), c},c->get_id()});
                     }
                     else
                     {

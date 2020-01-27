@@ -7,6 +7,8 @@
 #define DEFAULT_PORT 5600;
 using namespace server_side;
 
+std::mutex server_side::server_mutex;
+
 /**
  * main function. manages the whole project.
  * receives up to 10 clients and handles them.
@@ -30,19 +32,22 @@ int boot::Main::main(int argc, char **argv) {
     std::vector<ClientHandler*> client_handler_vec;
     std::vector<MatrixSolverOA*> solver_vec;
     std::vector<BestFirstSearch<double>*> best_f_s_vec;
+    std::vector<Astar<double>*> astar_vec;
 
     for (int j = 0; j < 10; ++j) {
-        best_f_s_vec.push_back(new BestFirstSearch<double>());
-        solver_vec.push_back(new MatrixSolverOA(best_f_s_vec[j]));
+        astar_vec.push_back(new Astar<double>());
+        solver_vec.push_back(new MatrixSolverOA(astar_vec[j]));
         client_handler_vec.push_back(new MyClientHandler(solver_vec[j], &cache_manager));
     }
 
     MyParallelServer myServer;
     myServer.open(port_num, client_handler_vec);
 
-    std::this_thread::sleep_for(std::chrono::seconds(50000));
+    std::this_thread::sleep_for(std::chrono::seconds(10));
+    server_mutex.lock();
+    server_mutex.unlock();
     for (int i = 0; i < client_handler_vec.size(); ++i) {
-        delete best_f_s_vec[i];
+        delete astar_vec[i];
         delete solver_vec[i];
         delete client_handler_vec[i];
     }

@@ -5,14 +5,6 @@
 #include "MyParallelServer.h"
 using namespace server_side;
 
-/**
- *  constructor.
- *  initializes the flag.
- */
-MyParallelServer::MyParallelServer()
-{
-    m_stopFlag= false;
-}
 
 /**
  * open function- creates a socket and binds it to the port.
@@ -21,23 +13,7 @@ MyParallelServer::MyParallelServer()
  */
 void MyParallelServer::open(int port,std::vector<ClientHandler*> clientHandlerVec)
 {
-    m_serverSocket = socket(AF_INET, SOCK_STREAM, 0);
-    if (m_serverSocket == -1)
-    {
-        //error
-        throw "Could not create a socket";
-    }
-
-    address.sin_family = AF_INET;
-    address.sin_addr.s_addr = INADDR_ANY;
-    address.sin_port = htons(port);
-
-    //the actual bind command
-    if (bind(m_serverSocket, (struct sockaddr *) &address, sizeof(address)) == -1)
-    {
-        throw "Could not bind the socket to an IP";
-    }
-
+    create_and_bind(port);
     std::thread server_thread(&MyParallelServer::runServer,this,clientHandlerVec);
     server_thread.detach();
 }
@@ -49,6 +25,7 @@ void MyParallelServer::open(int port,std::vector<ClientHandler*> clientHandlerVe
  */
 void MyParallelServer::runServer(std::vector<ClientHandler*> clientHandlerVec)
 {
+    server_mutex.lock();
     std::vector<std::thread> threads;
     while(!m_stopFlag)
     {
@@ -58,12 +35,7 @@ void MyParallelServer::runServer(std::vector<ClientHandler*> clientHandlerVec)
             std::cout<<"Server is now listening ..."<<std::endl;
         }
 
-        //Set timout of 2 minutes for server socket listening to client
-        struct timeval tv{};
-        tv.tv_sec = 120;
-        tv.tv_usec = 0;
-        int s = setsockopt(m_serverSocket, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
-
+        set_socket_timeout();
         // accepting a client
         int clientSocket = accept(m_serverSocket, (struct sockaddr *)&address,
                                   (socklen_t*)&address);
@@ -81,6 +53,7 @@ void MyParallelServer::runServer(std::vector<ClientHandler*> clientHandlerVec)
     for (auto&& t : threads) {
         t.join();
     }
+    server_mutex.unlock();
 }
 
 /**
@@ -92,14 +65,4 @@ void MyParallelServer::runClientHandler(int clientSd, ClientHandler* clientHandl
 {
     clientHandler->handle_client(clientSd);
     close(clientSd);
-}
-
-/**
- * stop function.
- * sets the value of the flag to true.
- * it happens when we want to terminate the main loop.
- */
-void MyParallelServer::stop()
-{
-    m_stopFlag = true;
 }
