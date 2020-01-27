@@ -14,6 +14,7 @@ void MatrixSolution::edit_solution_representation() {
     std::string result = recursion_path(this->state_);
     release_solution();
     this->solution = result.substr(0, result.length() - 2);
+    this->solution += '\n';
   } else {
     this->solution = "There is no path that can reach the target";
   }

@@ -123,11 +123,14 @@ Value FileCacheManager<Value>::get(std::string key) {
     _cache[key].second = least_recently_list.begin();
     return _cache[key].first;
   } else {
-    Value lru_value = _cache.find(least_recently_list.back())->second.first;
+    Value lru_value;
+    if (_cache.size() != 0)
+      lru_value = _cache.find(least_recently_list.back())->second.first;
     // searches in files
     try {
       Value mru_value = read_from_file(key, lru_value);
-      erase_least_recently_used();
+      if (_cache.size() != 0)
+        erase_least_recently_used();
       add_most_recently_used(key, mru_value);
       return mru_value;
     } catch (const char *e) {
@@ -160,7 +163,8 @@ Value FileCacheManager<Value>::read_from_file(const std::string& key, Value valu
   }
 
   // read key's value
-  in_file >> value;
+  //in_file >> value;
+  std::getline(in_file, value);
   in_file.close();
   return value;
 }
