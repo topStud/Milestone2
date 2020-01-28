@@ -32,11 +32,14 @@ int boot::Main::main(int argc, char **argv) {
     std::vector<ClientHandler*> client_handler_vec;
     std::vector<MatrixSolverOA*> solver_vec;
     std::vector<BestFirstSearch<double>*> best_f_s_vec;
-    std::vector<Astar<double>*> astar_vec;
+ //   std::vector<Astar<double>*> astar_vec;
+//    std::vector<BFS<double>*> bfs_vec;
+//    std::vector<DFS<double>*> dfs_vec;
+
 
     for (int j = 0; j < 10; ++j) {
-        astar_vec.push_back(new Astar<double>());
-        solver_vec.push_back(new MatrixSolverOA(astar_vec[j]));
+        best_f_s_vec.push_back(new BestFirstSearch<double>());
+        solver_vec.push_back(new MatrixSolverOA(best_f_s_vec[j]));
         client_handler_vec.push_back(new MyClientHandler(solver_vec[j], &cache_manager));
     }
 
@@ -47,7 +50,7 @@ int boot::Main::main(int argc, char **argv) {
     server_mutex.lock();
     server_mutex.unlock();
     for (int i = 0; i < client_handler_vec.size(); ++i) {
-        delete astar_vec[i];
+        delete best_f_s_vec[i];
         delete solver_vec[i];
         delete client_handler_vec[i];
     }

@@ -63,5 +63,5 @@ std::string MatrixSolution::recursion_path(State<double> *state) {
   else {
     direction = UP;
   }
-  return recursion_path((*state).get_parent()) + direction + " (" + std::to_string((int)(*state).get_cost()) + ") ,";
+  return recursion_path((*state).get_parent()) + direction + " (" + std::to_string((double)(*state).get_cost()) + ") ,";
 }

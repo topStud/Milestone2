@@ -136,7 +136,7 @@ public:
         }
         // returns null if the goal is unreachable.
         std::cout<<"Not Found!"<<std::endl;
-        return NULL;
+        return nullptr;
     }
     /**
      * getNumberOfNodesEvaluated function.

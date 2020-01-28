@@ -72,6 +72,7 @@ class DFS : public  Searcher<T> {
     stack_nodes.push(init_state);
     while (!stack_nodes.empty()) {
       node = stack_nodes.top();
+      stack_nodes.pop();
       if ((*node) == s.get_goal()) {
         // releasing stack nodes
         while (!stack_nodes.empty()) {
@@ -81,7 +82,6 @@ class DFS : public  Searcher<T> {
         release_finished_nodes(node);
         return node;
       }
-      stack_nodes.pop();
       if (finished_nodes.find(node->get_id()) == finished_nodes.end()) {
         nodes_num++;
         finished_nodes.insert({node->get_id(), node});

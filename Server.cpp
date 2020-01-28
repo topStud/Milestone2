@@ -2,7 +2,8 @@
 // Created by sigalit on 26.1.2020.
 //
 
-#include "ServerAbs.h"
+#include "Server.h"
+#define DEFAULT_TIMEOUT 12;
 
 using namespace server_side;
 

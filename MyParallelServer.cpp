@@ -27,6 +27,7 @@ void MyParallelServer::runServer(std::vector<ClientHandler*> clientHandlerVec)
 {
     server_mutex.lock();
     std::vector<std::thread> threads;
+    int threadIdx = 0;
     while(!m_stopFlag)
     {
         if (listen(m_serverSocket, 10) == -1) {
@@ -45,7 +46,11 @@ void MyParallelServer::runServer(std::vector<ClientHandler*> clientHandlerVec)
             stop();
         } else {
             std::cout << "Client accepted" << std::endl;
-            threads.push_back(std::thread(&MyParallelServer::runClientHandler,this, clientSocket,clientHandlerVec[0]));
+            threads.push_back(std::thread(&MyParallelServer::runClientHandler,this, clientSocket,clientHandlerVec[threadIdx++]));
+        }
+        if(threadIdx == clientHandlerVec.size())
+        {
+            threadIdx = 0;
         }
     }
     std::cout << "Closing the listening socket"<<std::endl;

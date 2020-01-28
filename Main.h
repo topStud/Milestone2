@@ -10,6 +10,7 @@
 #include "MatrixSolution.h"
 #include "MatrixSolverOA.h"
 #include "BFS.h"
+#include "DFS.h"
 #include "Astar.h"
 #include "Server.h"
 #include "MySerialServer.h"

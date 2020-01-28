@@ -1,7 +1,7 @@
 
 #ifndef MILESTONE2_MYSERIALSERVER_H
 #define MILESTONE2_MYSERIALSERVER_H
-#include "ServerAbs.h"
+#include "Server.h"
 #include <thread>
 #include <vector>
 
