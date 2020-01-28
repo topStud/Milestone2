@@ -31,14 +31,14 @@ int boot::Main::main(int argc, char **argv) {
     FileCacheManager<std::string> cache_manager;
     std::vector<ClientHandler*> client_handler_vec;
     std::vector<MatrixSolverOA*> solver_vec;
-    std::vector<BestFirstSearch<double>*> best_f_s_vec;
+    std::vector<DFS<double>*> best_f_s_vec;
  //   std::vector<Astar<double>*> astar_vec;
 //    std::vector<BFS<double>*> bfs_vec;
 //    std::vector<DFS<double>*> dfs_vec;
 
 
     for (int j = 0; j < 10; ++j) {
-        best_f_s_vec.push_back(new BestFirstSearch<double>());
+        best_f_s_vec.push_back(new DFS<double>());
         solver_vec.push_back(new MatrixSolverOA(best_f_s_vec[j]));
         client_handler_vec.push_back(new MyClientHandler(solver_vec[j], &cache_manager));
     }

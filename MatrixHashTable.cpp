@@ -64,6 +64,7 @@ void MatrixHashTable::reload_table() {
   std::ifstream in_file;
   std::string temp{}, matrix_str{};
   int num_temp;
+  char enter;
   in_file.open(SAVE_FILE);
 
   // file exists
@@ -71,10 +72,10 @@ void MatrixHashTable::reload_table() {
     while (!in_file.eof()) {
       do {
         std::getline(in_file, temp);
-        /*in_file >> temp;*/
         matrix_str += temp + '\n';
       } while (temp != "end");
       in_file >> num_temp;
+      in_file >> enter;
       matrix_map.insert({matrix_str, num_temp});
     }
     in_file.close();
@@ -93,6 +94,7 @@ void MatrixHashTable::save_table() {
   for (std::pair<std::string, int> item : matrix_map) {
     out_file << item.first;
     out_file << item.second;
+    out_file << '\n';
   }
   out_file.close();
 }
