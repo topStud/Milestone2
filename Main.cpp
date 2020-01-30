@@ -31,15 +31,12 @@ int boot::Main::main(int argc, char **argv) {
     FileCacheManager<std::string> cache_manager;
     std::vector<ClientHandler*> client_handler_vec;
     std::vector<MatrixSolverOA*> solver_vec;
-    std::vector<DFS<double>*> best_f_s_vec;
- //   std::vector<Astar<double>*> astar_vec;
-//    std::vector<BFS<double>*> bfs_vec;
-//    std::vector<DFS<double>*> dfs_vec;
-
+    std::vector<Searcher<double>*> searcher_vec;
+    MatrixHashTable::get_instance()->reload_table();
 
     for (int j = 0; j < 10; ++j) {
-        best_f_s_vec.push_back(new DFS<double>());
-        solver_vec.push_back(new MatrixSolverOA(best_f_s_vec[j]));
+        searcher_vec.push_back(new BestFirstSearch<double>());
+        solver_vec.push_back(new MatrixSolverOA(searcher_vec[j]));
         client_handler_vec.push_back(new MyClientHandler(solver_vec[j], &cache_manager));
     }
 
@@ -50,7 +47,7 @@ int boot::Main::main(int argc, char **argv) {
     server_mutex.lock();
     server_mutex.unlock();
     for (int i = 0; i < client_handler_vec.size(); ++i) {
-        delete best_f_s_vec[i];
+        delete searcher_vec[i];
         delete solver_vec[i];
         delete client_handler_vec[i];
     }

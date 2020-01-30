@@ -3,7 +3,7 @@
 //
 
 #include "Server.h"
-#define DEFAULT_TIMEOUT 12;
+#define DEFAULT_TIMEOUT 120;
 
 using namespace server_side;
 

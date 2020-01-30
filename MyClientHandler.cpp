@@ -26,10 +26,10 @@ void MyClientHandler::handle_client(int client_socket) {
             std::cerr << "Error reading from client" << std::endl;
         }
         temp += buffer;
-        while ((index = temp.find("\r\n")) != std::string::npos) {
-          sub_str = temp.substr(0, index);
-          matrix += sub_str + '\n';
-          temp = temp.substr(index+2);
+        while ((index = temp.find("\n")) != std::string::npos) {
+          sub_str = temp.substr(0, index+1);
+          matrix += sub_str;
+          temp = temp.substr(index+1);
           if (std::regex_match(sub_str, r)) {
             stop_loop = true;
             break;
@@ -42,8 +42,6 @@ void MyClientHandler::handle_client(int client_socket) {
       matrix_name = solver_->get_name() + MatrixHashTable::get_instance()->get_matrix_name(matrix);
     }
 
-   // if (MatrixHashTable::get_instance()->does_matrix_exist(matrix)) {
-     // matrix_name = solver_->get_name() + MatrixHashTable::get_instance()->get_matrix_name(matrix);
      if(this->cache_manager_->exist_in_cache(matrix_name)) {
        solution = this->cache_manager_->get(matrix_name);
      } else {

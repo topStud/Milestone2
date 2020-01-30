@@ -12,7 +12,7 @@ class MatrixHashTable {
   std::unordered_map<std::string, int> matrix_map;
   std::hash<std::string> hash_;
   static MatrixHashTable* collection_;
-  MatrixHashTable() {reload_table();}
+  MatrixHashTable() {}
  public:
   static MatrixHashTable* get_instance();
   ~MatrixHashTable();
