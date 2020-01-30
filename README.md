@@ -30,6 +30,7 @@ After all our preparations are complete, it is time to solve our problem.
 First, we need to create our server so we will be able to connect to it as a client. For that, we need to run our program as follows:
 * open a terminal and write the command - g++ -std=c++14 *.cpp -o a.out -pthread
 * then the following command will run the program - ./a.out
+
   you may add a port number to that command, but it is not mandatory. The default port number is 5600.
 Now, our server is ready and waiting for a client.
 the next step will be to connect to the server. Open the terminal and write the following, followed by a port number of your choosing: telnet 127.0.0.1
