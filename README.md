@@ -31,7 +31,7 @@ First, we need to create our server so we will be able to connect to it as a cli
 * open a terminal and write the command - g++ -std=c++14 *.cpp -o a.out -pthread
 * then the following command will run the program - ./a.out
 
-  you may add a port number to that command, but it is not mandatory. The default port number is 5600.
+you may add a port number to that command, but it is not mandatory. The default port number is 5600.
 Now, our server is ready and waiting for a client.
 the next step will be to connect to the server. Open the terminal and write the following, followed by a port number of your choosing: telnet 127.0.0.1
 Now, all you need to do is to enter your matrix followed by your starting point and ending point (in that exact order). At last, after all the information was sent, send the word "end" to announce the termination of your input.
