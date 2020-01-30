@@ -1,0 +1,184 @@
+commit e0e9d69485a0d76f22de308638e00168cdc6624f
+Author: sigalit <sigalit_88@hotmail.com>
+Date:   Thu Jan 30 23:19:38 2020 +0200
+
+    Fix bugs in MatrixHashTable and MyClientHandler
+
+commit e191f11eeb293dec0547a8c0c8564171186bdab3
+Author: topStud <58818420+topStud@users.noreply.github.com>
+Date:   Thu Jan 30 10:11:50 2020 +0200
+
+    Update README.md
+
+commit 8e236ffa0017b84130c853ca47f3b94f4f66ce9d
+Author: topStud <58818420+topStud@users.noreply.github.com>
+Date:   Thu Jan 30 10:10:51 2020 +0200
+
+    Update README.md
+
+commit dbf846f64f66d9f6dbbb140ba91877d849cde5b3
+Author: topStud <58818420+topStud@users.noreply.github.com>
+Date:   Thu Jan 30 10:09:40 2020 +0200
+
+    Update README.md
+
+commit a2e720460b8f7fded5dba607422ee4dcc2a47ac3
+Author: topStud <topaz083@gmail.com>
+Date:   Wed Jan 29 01:25:49 2020 +0200
+
+    fixed bugs about the file
+
+commit 11743c6c337a98dd9df1c86bcd127e998dbd0455
+Author: sigalit <sigalit_88@hotmail.com>
+Date:   Wed Jan 29 00:29:34 2020 +0200
+
+    fix bug in Parallel server.
+    fix bug in DFS alg.
+    Move ServerAbs class to Server file under the same namespace: server_side.
+    Print solution path cost as double instead of int.
+
+commit da169554bd8b45edae413527692a477c5c92d5ea
+Author: topStud <topaz083@gmail.com>
+Date:   Mon Jan 27 23:44:51 2020 +0200
+
+    bug fixed
+
+commit ea3e32a82454261f6761cc4df784c36fe074aa9a
+Author: sigalit <sigalit_88@hotmail.com>
+Date:   Mon Jan 27 22:17:57 2020 +0200
+
+    fix issue in BestFirstSearch alg.
+    Add ServerAbs class for common code of servers.
+    Add mutex to make sure all threads finish before the main.
+
+commit c135808e9d82a1d0d36f4bdd1583c6edbafd1a17
+Author: topStud <topaz083@gmail.com>
+Date:   Sun Jan 26 21:11:19 2020 +0200
+
+    comments added
+
+commit 3eb733f7f61aa0f12453c0a48856dfd47cbda209
+Author: topStud <topaz083@gmail.com>
+Date:   Sun Jan 26 10:14:38 2020 +0200
+
+    added matrix saver- saves the matrixes between different runs
+
+commit 5d42551f675d25454a856f70e48a6c6455ed6222
+Author: sigalit <sigalit_88@hotmail.com>
+Date:   Sat Jan 25 23:44:56 2020 +0200
+
+    Adding MyParallelServer and support for default port number
+
+commit 2fa9f69d9223597e196b2c6924b054a12fac06a0
+Author: topStud <topaz083@gmail.com>
+Date:   Sat Jan 25 10:43:33 2020 +0200
+
+    Each matrix is with unique number
+
+commit 70b8a57d8596d09115980bf23ae52409aca99804
+Author: topStud <topaz083@gmail.com>
+Date:   Sat Jan 25 01:19:05 2020 +0200
+
+    OMG - it works
+
+commit e6b3e8856c3e25cf61f40bb3c9603fce5e3bcc40
+Author: topStud <topaz083@gmail.com>
+Date:   Fri Jan 24 21:05:46 2020 +0200
+
+    updated version with hashmap for matrixes and chenges in ClientHandler
+
+commit 5783cdbd677f901359bc2e0c5b459f2c9238088d
+Author: sigalit <sigalit_88@hotmail.com>
+Date:   Fri Jan 24 02:14:54 2020 +0200
+
+    releasing memory
+
+commit c5291c2a4f3018f64c2862b87c6d973f56c61de7
+Author: sigalit <sigalit_88@hotmail.com>
+Date:   Fri Jan 24 00:37:41 2020 +0200
+
+    Adding working version of BestFirstSearch, Astar and BFS
+
+commit 29d004589dff6634a558761a32c22db22618805b
+Author: sigalit <sigalit_88@hotmail.com>
+Date:   Thu Jan 23 20:00:49 2020 +0200
+
+    changes for debugging problem in BestFirstSearch alg
+
+commit e807e106edec295c123c8e0054ef262038b413b2
+Author: sigalit <sigalit_88@hotmail.com>
+Date:   Thu Jan 23 01:16:13 2020 +0200
+
+    Update bestFirstSearch + some fixes
+
+commit 13acc09050ec3da2c3e7ab5fd24839ff30f18d75
+Author: topStud <topaz083@gmail.com>
+Date:   Tue Jan 21 23:38:25 2020 +0200
+
+    updated vesion fixed bugs
+
+commit a1b8bfdb988b533882656ec2fb83d425070626f3
+Author: topStud <topaz083@gmail.com>
+Date:   Tue Jan 21 20:43:02 2020 +0200
+
+    updated with DFS - not perfect
+
+commit b7fc05c1c685d4ee42fb969ef493fdf2ecd9b92c
+Author: topStud <topaz083@gmail.com>
+Date:   Tue Jan 21 09:41:10 2020 +0200
+
+    fixed bugs in MatrixProblem
+
+commit fd71aed3ef6b24b4abc355f274664603a0bbe4d9
+Author: topStud <topaz083@gmail.com>
+Date:   Mon Jan 20 23:01:26 2020 +0200
+
+    MatrixProblem class was fixed- (-1) is not part of successors
+
+commit 875afde46dae0bd20bb56fec958a5e6268da0015
+Author: topStud <topaz083@gmail.com>
+Date:   Mon Jan 20 22:50:18 2020 +0200
+
+    MatixSolution is implemented
+
+commit 881023bf5bb42cb5fc2419731580becb4da5e6b5
+Author: topStud <topaz083@gmail.com>
+Date:   Mon Jan 20 22:48:12 2020 +0200
+
+    adding MatrixSolutio implementaion
+
+commit a0c3c397651a1ff341707d76adee2508a6939183
+Author: topStud <topaz083@gmail.com>
+Date:   Mon Jan 20 21:15:13 2020 +0200
+
+    update part 2, adding classes to the program's structure
+
+commit b5ba408c4dc170e17232fc7ede772acff976255f
+Author: sigalit <sigalit_88@hotmail.com>
+Date:   Sun Jan 19 23:34:37 2020 +0200
+
+    Adding bestFirstSearch and some fixes
+
+commit 13b89225974c2fc3867777fe625906a4ec66d327
+Author: topStud <topaz083@gmail.com>
+Date:   Sat Jan 18 17:32:24 2020 +0200
+
+    adding code regarding part 3
+
+commit fd32406f2e5ba7a2ee382bb5e83110a447302954
+Author: sigalit <sigalit_88@hotmail.com>
+Date:   Sat Jan 18 17:08:33 2020 +0200
+
+    adding Server interface, MySerialServer and StringReverser classes
+
+commit fbb3962d9462c8ec66b2f44c74d1db60fe729a76
+Author: topStud <topaz083@gmail.com>
+Date:   Mon Jan 13 12:43:26 2020 +0200
+
+    first draft of the added classes
+
+commit 742003513c8bf4dfa866a42a6399e01e6eb9826f
+Author: topStud <58818420+topStud@users.noreply.github.com>
+Date:   Sun Jan 12 18:56:20 2020 +0200
+
+    Initial commit
